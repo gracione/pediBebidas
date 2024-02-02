@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 
-export function HomeScreen() {
+const HomeScreen = () => {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>Home Screen</Text>
@@ -8,3 +8,4 @@ export function HomeScreen() {
     );
   }
   
+export default HomeScreen;
