@@ -5,7 +5,8 @@ import { styled } from 'styled-components/native';
 interface InputComponentProps extends TextInputProps {}
 
 const InputComponent: React.FC<InputComponentProps> = (props) => {
-  return <StyledInput {...props} />;
+  return <StyledInput {...props} />
+  ;
 };
 
 const StyledInput = styled.TextInput`
