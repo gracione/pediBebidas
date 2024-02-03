@@ -17,9 +17,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     console.log('Botão de login pressionado');
     // navigation.navigate('Home');
   };
+
   const handleRegistrar = () => {
     console.log('Botão de registrar pressionado');
-    // navigation.navigate('Home');
+    navigation.navigate('RegisterScreen');
   };
 
   return (
