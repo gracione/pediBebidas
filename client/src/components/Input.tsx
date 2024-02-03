@@ -12,10 +12,10 @@ const InputComponent: React.FC<InputComponentProps> = (props) => {
 const StyledInput = styled.TextInput`
   height: 40px;
   border-color: #000000;
-  border-width: 1px;
+  border: 1px ;
   padding-left: 10px;
   margin-bottom: 10px;
-  width: 150px;
+  width: 350px;
 `;
 
 export default InputComponent;

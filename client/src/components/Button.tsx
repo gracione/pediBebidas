@@ -17,11 +17,11 @@ const StyledButton: React.FC<StyledButtonProps> = ({ title, ...props }) => {
 const ButtonContainer = styled.TouchableOpacity`
   height: 40px;
   border-color: #6e3030;
-  border-width: 1px;
+  border: 0.2px;
   padding-left: 10px;
   margin-bottom: 10px;
   background-color: #ec4646;
-  width: 150px;
+  width: 350px;
   justify-content: center;
   align-items: center;
 `;
