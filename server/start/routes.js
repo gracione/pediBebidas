@@ -17,4 +17,5 @@
 const Route = use('Route')
 
 Route.resource('posts', 'PostController').apiOnly()
+Route.resource('endereco', 'EnderecoController').apiOnly()
 Route.on('/').render('welcome')
