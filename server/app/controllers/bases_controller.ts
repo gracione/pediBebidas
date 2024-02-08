@@ -3,10 +3,17 @@ import { BaseModel } from '@adonisjs/lucid/build/src/Orm/BaseModel'
 
 export default class BaseController {
   protected Model: typeof BaseModel
+  protected ValidateCreate;
+  protected ValidateUpdate;
 
   constructor(model: typeof BaseModel) {
     this.Model = model
   }
+
+  async setValidate({ ValidateCreate, ValidateUpdate }) {
+    this.ValidateCreate = ValidateCreate;
+    this.ValidateUpdate = ValidateUpdate;
+}
 
   async index({ response }: HttpContext) {
     const data = await this.Model.all()
@@ -24,7 +31,8 @@ export default class BaseController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = request.only(this.Model.$columns.map(column => column.columnName))
+    const data = request.only(['rua','numero','bairro','complementar','latitude','longitude']);
+    const payload = await this.ValidateCreate.validate(data);
     const instance = await this.Model.create(data)
     return response.created(instance)
   }

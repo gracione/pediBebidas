@@ -3,7 +3,7 @@ import vine from '@vinejs/vine'
 /**
  * Validates the endereco's creation action
  */
-export const createEnderecoValidator = vine.compile(
+export const ValidateCreate = vine.compile(
   vine.object({
     rua: vine.string().trim(),
     numero : vine.string().trim(),
@@ -17,7 +17,7 @@ export const createEnderecoValidator = vine.compile(
 /**
  * Validates the endereco's update action
  */
-export const updateEnderecoValidator = vine.compile(
+export const ValidateUpdate = vine.compile(
   vine.object({
     title: vine.string().trim().minLength(6),
     description: vine.string().trim().escape()
