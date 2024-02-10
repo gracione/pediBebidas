@@ -13,8 +13,11 @@ export default class UsuariosController extends BaseController{
 
     async store({ request }: HttpContext) {
         const { email, password } = request.only(['email', 'password'])
-    
         const user = await Usuario.findBy('email', email)
-        return user;
+        if (!user) {
+            response.abort('Invalid credentials')
+        }
+        
+       await hash.verify(user.password, password)       
       }
 }
