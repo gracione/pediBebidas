@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import EnderecosController from '#controllers/enderecos_controller'
+import UsuarioController from '#controllers/usuarios_controller'
 
 router.get('/', async () => {
   return {
@@ -17,5 +18,6 @@ router.get('/', async () => {
 })
 
 router.resource('endereco', EnderecosController).apiOnly()
+router.resource('usuario', UsuarioController).apiOnly()
 
 
