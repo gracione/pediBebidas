@@ -9,7 +9,7 @@ export default class UsuarioSchema extends BaseSchema {
       table.string('nome').notNullable()
       table.string('telefone')
       table.string('email').notNullable()
-      table.string('senha').notNullable()
+      table.string('password').notNullable()
       table.date('data_nascimento')
       table.integer('id_tipo_usuario').unsigned().references('id').inTable('tipo_usuario')
       table.integer('id_endereco').unsigned().references('id').inTable('endereco')

@@ -8,7 +8,7 @@ export const ValidateCreate = vine.compile(
     nome :  vine.string().trim(),
     telefone :  vine.string().trim(),
     email :  vine.string().trim(),
-    senha :  vine.string().trim(),
+    password :  vine.string().trim(),
     data_nascimento :  vine.string().trim(),
     id_tipo_usuario :  vine.string().trim(),
     id_endereco :  vine.string().trim(),

@@ -1,4 +1,4 @@
-import { HttpContext } from '@adonisjs/core/http';
+// import { HttpContext } from '@adonisjs/core/http';
 import Endereco from '#models/endereco';
 import BaseController from './bases_controller.js';
 import { ValidateCreate, ValidateUpdate} from '#validators/endereco';

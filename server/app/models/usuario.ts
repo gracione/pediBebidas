@@ -17,7 +17,7 @@ export default class Usuario extends BaseModel {
   declare email: string
 
   @column()
-  declare senha: string
+  declare password: string
 
   @column()
   declare data_nascimento: DateTime
