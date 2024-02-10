@@ -31,8 +31,8 @@ export default class BaseController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = request.only(['rua','numero','bairro','complementar','latitude','longitude']);
-    const payload = await this.ValidateCreate.validate(data);
+    const data = request.all();
+    await this.ValidateCreate.validate(data);
     const instance = await this.Model.create(data)
     return response.created(instance)
   }
