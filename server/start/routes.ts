@@ -18,6 +18,6 @@ router.get('/', async () => {
 })
 
 router.resource('endereco', EnderecosController).apiOnly()
-router.resource('usuario', UsuarioController).apiOnly()
+router.resource('usuario', UsuarioController).only(['store'])
 
 
