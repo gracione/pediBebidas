@@ -18,6 +18,9 @@ export default class UsuariosController extends BaseController{
             response.abort('Invalid credentials')
         }
         
-       await hash.verify(user.password, password)       
-      }
+        await hash.verify(user.password, password)
+        const token = await Usuario.accessTokens.create(user)
+        return token;
+    }
+
 }

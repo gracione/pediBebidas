@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 
 export default class Usuario extends BaseModel {
   public static table = 'usuario'
@@ -28,5 +29,12 @@ export default class Usuario extends BaseModel {
   @column()
   declare id_endereco: number
 
+  static accessTokens = DbAccessTokensProvider.forModel(Usuario, {
+    expiresIn: '30 days',
+    prefix: 'oat_',
+    table: 'auth_access_tokens',
+    type: 'auth_token',
+    tokenSecretLength: 40,
+  })
 
 }
