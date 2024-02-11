@@ -11,7 +11,7 @@ export default class UsuariosController extends BaseController{
         this.setValidate({ValidateCreate, ValidateUpdate});
     }
 
-    async store({ request }: HttpContext) {
+    async autenticarUsuario({ request }: HttpContext) {
         const { email, password } = request.only(['email', 'password'])
         const user = await Usuario.findBy('email', email)
         if (!user) {
