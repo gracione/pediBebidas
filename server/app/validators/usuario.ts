@@ -10,15 +10,19 @@ export const ValidateCreate = vine.compile(
     email :  vine.string().trim(),
     password :  vine.string().trim(),
     data_nascimento :  vine.string().trim(),
-    id_tipo_usuario :  vine.string().trim(),
-    id_endereco :  vine.string().trim(),
+    rua: vine.string().trim(),
+    numero : vine.string().trim(),
+    bairro : vine.string().trim(),
+    complementar : vine.string().trim(),
+    latitude : vine.string().trim().minLength(7),
+    longitude : vine.string().trim().minLength(7),
   })
 )
 
 /**
  * Validates the usuario's update action
  */
-export const ValidateUpdate = vine.compile(
+export const ValidateAutenticacao = vine.compile(
   vine.object({
     email: vine.string().trim().minLength(6),
     description: vine.string().trim().escape()

@@ -1,27 +1,30 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Usuario from '#models/usuario'
+import Endereco from '#models/endereco';
 import BaseController from './bases_controller.js'
-import { ValidateCreate, ValidateUpdate } from '#validators/usuario'
+import { ValidateCreate, ValidateAutenticacao } from '#validators/usuario'
 import hash from '@adonisjs/core/services/hash'
 
 export default class UsuariosController extends BaseController {
   constructor() {
     super(Usuario)
 
-    this.setValidate({ ValidateCreate, ValidateUpdate })
   }
 
   async store({ request, response }: HttpContext) {
     const data = request.all()
-    await this.ValidateCreate.validate(data)
-    const instance = await this.Model.create(data)
+    await ValidateCreate.validate(data)
     const { email } = request.only(['email', 'password'])
     const user = await Usuario.findBy('email', email)
-
+    
     if (user) {
-      response.abort('Email já cadastrado')
+        response.abort('Email já cadastrado')
     }
 
+    const { id: id_endereco } = await Endereco.create(request.only(['rua','numero','bairro','complementar','latitude','longitude']));
+
+    data.id_endereco = id_endereco
+    const instance = await Usuario.create(request.only(['nome','telefone','email','password','data_nascimento','id_endereco']))
     const token = await Usuario.accessTokens.create(instance)
     return response.created(token)
   }
