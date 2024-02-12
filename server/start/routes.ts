@@ -20,7 +20,7 @@ router.get('/', async () => {
 
 router.resource('endereco', EnderecosController).apiOnly()
 router.post('usuario', [UsuarioController, 'store'])
-router.post('usuario/autenticar-usuario', [UsuarioController,'autenticarUsuario'])
+router.post('usuario/autenticar', [UsuarioController,'autenticarUsuario'])
 
 router.post('test', async ({ auth }) => {})
   .use(middleware.auth({
