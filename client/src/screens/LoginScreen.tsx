@@ -4,19 +4,33 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import LogoImage from '../assets/logo.png';
+import api from '../service/api';
 
 interface LoginScreenProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const handleLogin = async (email: string, password: string) => {
+  console.log('Botão de login pressionado');
+  try {
+    const response = await api.post('usuario/autenticar', {
+      email: email,
+      password: password,
+    });
 
-  const handleLogin = () => {
-    console.log('Botão de login pressionado');
-    // navigation.navigate('Home');
-  };
+    console.log(response.data); // Se a resposta for bem-sucedida, imprime os dados
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      console.log(error.response.data.error); // Se a resposta for 400, imprime a mensagem de erro
+    } else {
+      console.error('Erro ao processar a requisição:', error.message);
+    }
+  }
+};
+
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleRegistrar = () => {
     console.log('Botão de registrar pressionado');
@@ -26,16 +40,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={LogoImage} style={styles.logo} />
-      <Input
-        placeholder="Username"
-        onChangeText={(text) => setUsername(text)}
-      />
+      <Input placeholder="Username" onChangeText={text => setEmail(text)} />
       <Input
         placeholder="Password"
         secureTextEntry
-        onChangeText={(text) => setPassword(text)}
+        onChangeText={text => setPassword(text)}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Login" onPress={() => handleLogin(email, password)} />
       <Button title="Registrar" onPress={handleRegistrar} />
     </View>
   );
@@ -52,7 +63,6 @@ const styles = StyleSheet.create({
     height: 240,
     marginBottom: 40,
   },
-  // Additional styles for InputComponent
   input: {
     width: '80%',
     marginBottom: 15,

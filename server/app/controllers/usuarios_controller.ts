@@ -23,6 +23,7 @@ export default class UsuariosController extends BaseController {
       }
 
       const usuarioData = request.only(['nome', 'telefone', 'email', 'password', 'data_nascimento'])
+      usuarioData.password = await hash.make(usuarioData.password)
       const enderecoData = request.only([
         'rua',
         'numero',
@@ -43,14 +44,17 @@ export default class UsuariosController extends BaseController {
     }
   }
 
-  async autenticarUsuario({ request }: HttpContext) {
+  async autenticarUsuario({ request, response }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
     const user = await Usuario.findBy('email', email)
     if (!user) {
       response.abort('Invalid credentials')
     }
 
-    await hash.verify(user.password, password)
+    const hashVerify = await hash.verify(user?.password, password)
+    if (!hashVerify) {
+      return response.status(400).send({ error: 'Senha incorreta' })
+    }
     const token = await Usuario.accessTokens.create(user)
     return token
   }
