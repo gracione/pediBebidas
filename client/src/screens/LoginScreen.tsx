@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Text } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -10,30 +10,30 @@ interface LoginScreenProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const handleLogin = async (email: string, password: string) => {
-  console.log('Botão de login pressionado');
-  try {
-    const response = await api.post('usuario/autenticar', {
-      email: email,
-      password: password,
-    });
-
-    console.log(response.data); // Se a resposta for bem-sucedida, imprime os dados
-  } catch (error) {
-    if (error.response && error.response.status === 400) {
-      console.log(error.response.data.error); // Se a resposta for 400, imprime a mensagem de erro
-    } else {
-      console.error('Erro ao processar a requisição:', error.message);
-    }
-  }
-};
-
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLogin = async (email: string, password: string) => {
+    setError(null)
+    try {
+      const response = await api.post('usuario/autenticar', {
+        email: email,
+        password: password,
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setError(error.response.data.error);
+      } else {
+        console.error('Erro ao processar a requisição:', error.message);
+      }
+    }
+  };
 
   const handleRegistrar = () => {
-    console.log('Botão de registrar pressionado');
     navigation.navigate('RegisterScreen');
   };
 
@@ -46,6 +46,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         secureTextEntry
         onChangeText={text => setPassword(text)}
       />
+      {error && <Text style={styles.error}>{error}</Text>}
       <Button title="Login" onPress={() => handleLogin(email, password)} />
       <Button title="Registrar" onPress={handleRegistrar} />
     </View>
@@ -69,6 +70,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  error: {
+    color: 'red',
+    margin: 10,
   },
 });
 

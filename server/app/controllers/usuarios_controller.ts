@@ -48,7 +48,7 @@ export default class UsuariosController extends BaseController {
     const { email, password } = request.only(['email', 'password'])
     const user = await Usuario.findBy('email', email)
     if (!user) {
-      response.abort('Invalid credentials')
+      return response.status(400).send({ error: 'Email incorreto' })
     }
 
     const hashVerify = await hash.verify(user?.password, password)
