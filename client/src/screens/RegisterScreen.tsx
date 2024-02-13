@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Alert, Text } from 'react-native';
+import { View, Alert, StyleSheet, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styled from 'styled-components/native';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import api from '../service/api';
 
 const Container = styled.View`
   flex: 1;
@@ -18,6 +19,7 @@ const RegisterButton = styled.Button`
 const RegisterScreen: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [telefone, setTelefone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
@@ -28,8 +30,9 @@ const RegisterScreen: React.FC = () => {
   const [complementar, setComplementar] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!name || !email || !dateOfBirth || !rua || !numero || !bairro || !latitude || !longitude) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
     } else if (password.length < 8) {
@@ -37,6 +40,32 @@ const RegisterScreen: React.FC = () => {
     } else if (password !== confirmPassword) {
       Alert.alert('Erro', 'As senhas não coincidem.');
     } else {
+      setError(null)
+      try {
+        const response = await api.post('usuario', {
+          name: name,
+          email: email,
+          password: password,
+          telefone: telefone,
+          data_nascimento: dateOfBirth,
+          showDatePicker: showDatePicker,
+          rua: rua,
+          numero: numero,
+          bairro: bairro,
+          complementar: complementar,
+          latitude: latitude,
+          longitude: longitude
+        });
+  
+        console.log(response.data);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          setError(error.response.data.error);
+        } else {
+          console.error('Erro ao processar a requisição:', error.message);
+        }
+      }
+  
       Alert.alert('Sucesso', `Registro realizado com sucesso!\nData de Nascimento: ${dateOfBirth.toISOString().split('T')[0]}`);
     }
   };
@@ -122,9 +151,17 @@ const RegisterScreen: React.FC = () => {
         onChangeText={(text) => setLongitude(text)}
         keyboardType="numeric"
       />
+      {error && <Text style={styles.error}>{error}</Text>}
       <Button title="Registrar" onPress={handleRegister} />
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  error: {
+    color: 'red',
+    margin: 10,
+  },
+});
 
 export default RegisterScreen;
