@@ -22,9 +22,15 @@ const RegisterScreen: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [rua, setRua] = useState('');
+  const [numero, setNumero] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [complementar, setComplementar] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
 
   const handleRegister = () => {
-    if (!name || !email || !dateOfBirth) {
+    if (!name || !email || !dateOfBirth || !rua || !numero || !bairro || !latitude || !longitude) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
     } else if (password.length < 8) {
       Alert.alert('Erro', 'A senha deve ter pelo menos 8 caracteres.');
@@ -82,6 +88,39 @@ const RegisterScreen: React.FC = () => {
         value={confirmPassword}
         onChangeText={(text) => setConfirmPassword(text)}
         secureTextEntry
+      />
+      <Input
+        placeholder="Rua"
+        value={rua}
+        onChangeText={(text) => setRua(text)}
+      />
+      <Input
+        placeholder="Número"
+        value={numero}
+        onChangeText={(text) => setNumero(text)}
+        keyboardType="numeric"
+      />
+      <Input
+        placeholder="Bairro"
+        value={bairro}
+        onChangeText={(text) => setBairro(text)}
+      />
+      <Input
+        placeholder="Complementar"
+        value={complementar}
+        onChangeText={(text) => setComplementar(text)}
+      />
+      <Input
+        placeholder="Latitude"
+        value={latitude}
+        onChangeText={(text) => setLatitude(text)}
+        keyboardType="numeric"
+      />
+      <Input
+        placeholder="Longitude"
+        value={longitude}
+        onChangeText={(text) => setLongitude(text)}
+        keyboardType="numeric"
       />
       <Button title="Registrar" onPress={handleRegister} />
     </Container>
