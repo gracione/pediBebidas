@@ -23,7 +23,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         password: password,
       });
 
-      console.log(response.data);
+      console.log(response.data.token);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setError(error.response.data.error);
