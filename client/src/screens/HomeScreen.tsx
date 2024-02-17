@@ -1,8 +1,8 @@
 import {View, Text} from 'react-native';
 
-const HomeScreen = () => {
+const HomeScreen: React.FC = () => {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View>
         <Text>Home Screen</Text>
       </View>
     );
