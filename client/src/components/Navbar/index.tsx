@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { removeToken, getToken } from '../../service/api';
 
 interface NavbarProps {
   navigation: any;
@@ -10,6 +11,10 @@ const Navbar: React.FC<NavbarProps> = ({ navigation }) => {
 
   const toggleMenu = () => {
     setExpanded(!expanded);
+  };
+
+  const sairDoPerfil = () => {
+    removeToken();
   };
 
   return (
@@ -28,7 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate('FaleConosco')} style={styles.menuItem}>
             <Text style={styles.menuItemText}>Fale Conosco</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Sair')} style={styles.menuItem}>
+          <TouchableOpacity onPress={() => sairDoPerfil()} style={styles.menuItem}>
             <Text style={styles.menuItemText}>Sair</Text>
           </TouchableOpacity>
         </View>

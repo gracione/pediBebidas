@@ -21,10 +21,20 @@ export const getToken = async (): Promise<string | null> => {
       console.log('Token recuperado com sucesso:', token);
       return token;
     }
+    console.log('test');
     return null;
   } catch (error) {
     console.log('Erro ao recuperar o token:', error);
     return null;
+  }
+};
+
+export const removeToken = async () => {
+  try {
+    await AsyncStorage.removeItem('token');
+    console.log('Token removido com sucesso!');
+  } catch (error) {
+    console.log('Erro ao remover o token:', error);
   }
 };
 
