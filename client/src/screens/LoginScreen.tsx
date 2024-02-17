@@ -4,35 +4,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import LogoImage from '../assets/logo.png';
-import api from '../service/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import api, { saveToken } from '../service/api';
 
 interface LoginScreenProps {
   navigation: NativeStackNavigationProp<any>;
 }
-
-const saveToken = async (token: string) => {
-  try {
-    await AsyncStorage.setItem('token', token);
-    console.log('Token salvo com sucesso!');
-  } catch (error) {
-    console.log('Erro ao salvar o token:', error);
-  }
-};
-
-const getToken = async (): Promise<string | null> => {
-  try {
-    const token = await AsyncStorage.getItem('token');
-    if (token !== null) {
-      console.log('Token recuperado com sucesso:', token);
-      return token;
-    }
-    return null;
-  } catch (error) {
-    console.log('Erro ao recuperar o token:', error);
-    return null;
-  }
-};
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -48,7 +24,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         password: password,
       });
 
-      saveToken(response.data.token);  
+      saveToken(response.data.token);
+      navigation.navigate('Home');
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setError(error.response.data.error);

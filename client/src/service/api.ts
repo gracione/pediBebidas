@@ -1,15 +1,31 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const api = axios.create({
-  //baseURL: process.env.API_URL,
-  baseURL: "http://10.0.2.2:3333/",
-})
+  baseURL: 'http://10.0.2.2:3333/',
+});
 
-//const token = localStorage.getItem('token');
+export const saveToken = async (token: string) => {
+  try {
+    await AsyncStorage.setItem('token', token);
+    console.log('Token salvo com sucesso!');
+  } catch (error) {
+    console.log('Erro ao salvar o token:', error);
+  }
+};
 
-//console.log(token);
-//if (token) {
-//  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-//}
+export const getToken = async (): Promise<string | null> => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    if (token !== null) {
+      console.log('Token recuperado com sucesso:', token);
+      return token;
+    }
+    return null;
+  } catch (error) {
+    console.log('Erro ao recuperar o token:', error);
+    return null;
+  }
+};
 
 export default api;
