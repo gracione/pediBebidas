@@ -4,26 +4,40 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import Home from '../pages/Home';
 import RegisterScreen from '../screens/RegisterScreen';
-import api, {getToken} from '../service/api';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {removeToken} from '../service/api';
 
 const Stack = createNativeStackNavigator();
 
-export function Navigation() {
-  if (getToken()) {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
+interface NavigationProps {
+  navigation: NativeStackNavigationProp<any>;
+}
+
+export const Navigation: React.FC<NavigationProps> = ({navigation}) => {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  const sairDoPerfil = () => {
+    removeToken();
+    setIsLoggedIn(false);
+    console.log(isLoggedIn);
+    //navigation.navigate('Login');
+  };
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+        {isLoggedIn ? (
+          <Stack.Screen name="Home">
+            {props => <Home {...props} sairDoPerfil={sairDoPerfil} />}
+          </Stack.Screen>
+        ) : (
+          <>
+            <Stack.Screen name="Login">
+              {props => <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />}
+            </Stack.Screen>
+            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {View, StyleSheet, Image, Text} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import LogoImage from '../assets/logo.png';
-import api, { saveToken } from '../service/api';
+import api, {saveToken} from '../service/api';
 
 interface LoginScreenProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({
+  navigation,
+  setIsLoggedIn,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -25,6 +28,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       });
 
       saveToken(response.data.token);
+      setIsLoggedIn(true);
       navigation.navigate('Home');
     } catch (error) {
       if (error.response && error.response.status === 400) {

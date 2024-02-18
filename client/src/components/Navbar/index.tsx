@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { removeToken, getToken } from '../../service/api';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface NavbarProps {
-  navigation: any;
+  navigation: NativeStackNavigationProp<any>;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ navigation }) => {
+const Navbar: React.FC<NavbarProps> = ({ navigation, sairDoPerfil }) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleMenu = () => {
     setExpanded(!expanded);
-  };
-
-  const sairDoPerfil = () => {
-    removeToken();
   };
 
   return (
@@ -30,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate('Perfil')} style={styles.menuItem}>
             <Text style={styles.menuItemText}>Perfil</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('FaleConosco')} style={styles.menuItem}>
+          <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')} style={styles.menuItem}>
             <Text style={styles.menuItemText}>Fale Conosco</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => sairDoPerfil()} style={styles.menuItem}>

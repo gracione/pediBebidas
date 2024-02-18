@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 
-const HomeScreen: React.FC = () => {
+export const HomeScreen2: React.FC = () => {
     return (
       <View>
         <Text>Home Screen</Text>
@@ -8,4 +8,3 @@ const HomeScreen: React.FC = () => {
     );
   }
   
-export default HomeScreen;

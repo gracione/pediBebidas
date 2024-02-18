@@ -21,11 +21,9 @@ export const getToken = async (): Promise<string | null> => {
       console.log('Token recuperado com sucesso:', token);
       return token;
     }
-    console.log('test');
-    return null;
+    return false;
   } catch (error) {
-    console.log('Erro ao recuperar o token:', error);
-    return null;
+    return false;
   }
 };
 
