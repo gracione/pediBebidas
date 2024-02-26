@@ -19,8 +19,6 @@ export const Navigation: React.FC<NavigationProps> = ({navigation}) => {
   const sairDoPerfil = () => {
     removeToken();
     setIsLoggedIn(false);
-    console.log(isLoggedIn);
-    //navigation.navigate('Login');
   };
 
   return (

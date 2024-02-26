@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import LogoImage from '../assets/logo.png';
 import api, {saveToken} from '../service/api';
+import {LogoStyle, ImagemStyle} from './styles';
 
 interface LoginScreenProps {
   navigation: NativeStackNavigationProp<any>;
@@ -45,7 +46,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      <Image source={LogoImage} style={styles.logo} />
+      <LogoStyle>
+        <ImagemStyle source={LogoImage}/>
+      </LogoStyle>
       <Input placeholder="Username" onChangeText={text => setEmail(text)} />
       <Input
         placeholder="Password"
@@ -64,11 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  logo: {
-    width: 160,
-    height: 240,
-    marginBottom: 40,
   },
   input: {
     width: '80%',
