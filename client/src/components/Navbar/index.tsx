@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Drawer} from 'react-native-paper';
+import { Icon} from 'react-native-elements';
 
 interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ navigation, sairDoPerfil }) => {
+const Navbar: React.FC<NavbarProps> = ({navigation, sairDoPerfil}) => {
   const [expanded, setExpanded] = useState(false);
   const [active, setActive] = React.useState('');
   const toggleMenu = () => {
@@ -16,8 +17,14 @@ const Navbar: React.FC<NavbarProps> = ({ navigation, sairDoPerfil }) => {
 
   return (
     <View>
+      
       <TouchableOpacity onPress={toggleMenu}>
-        <Text>Menu</Text>
+        <Icon
+          raised
+          name="heartbeat"
+          type="font-awesome"
+          color="#f50"
+        />
       </TouchableOpacity>
       {expanded && (
         <Drawer.Section title="Some title">
