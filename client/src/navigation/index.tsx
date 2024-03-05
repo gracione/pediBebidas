@@ -31,7 +31,7 @@ export const Navigation: React.FC<NavigationProps> = ({navigation}) => {
   return (
     <NavigationContainer>
       {/* {isLoggedIn && <Navbar navigation={navigation} sairDoPerfil={sairDoPerfil} />} */}
-      {!isLoggedIn ? (
+      {isLoggedIn ? (
         <Tab.Navigator>
           <Tab.Screen
             name="Home"

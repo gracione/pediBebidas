@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Button, Alert } from 'react-native';
+import api from '../../service/api';
 
 const Endereco: React.FC = () => {
   const [endereco, setEndereco] = useState({
@@ -15,7 +16,10 @@ const Endereco: React.FC = () => {
     setEndereco({ ...endereco, [field]: value });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    const response = await api.post('endereco', endereco);
+
+    console.log(response.data);
     Alert.alert('Endereço salvo com sucesso!');
   };
   return (
