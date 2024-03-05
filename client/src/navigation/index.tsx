@@ -11,6 +11,7 @@ import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Navbar from '../components/Navbar';
 import Pedidos from '../pages/Pedidos';
 import Perfil from '../pages/Perfil';
+import Endereco from '../pages/Endereco';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -30,7 +31,7 @@ export const Navigation: React.FC<NavigationProps> = ({navigation}) => {
   return (
     <NavigationContainer>
       {/* {isLoggedIn && <Navbar navigation={navigation} sairDoPerfil={sairDoPerfil} />} */}
-      {isLoggedIn ? (
+      {!isLoggedIn ? (
         <Tab.Navigator>
           <Tab.Screen
             name="Home"
@@ -43,8 +44,11 @@ export const Navigation: React.FC<NavigationProps> = ({navigation}) => {
             options={{headerShown: false}}
           />
           <Tab.Screen name="Perfil" options={{headerShown: false}}>
-            {props => <Perfil {...props} navigation={navigation} sairDoPerfil={sairDoPerfil} />}
+            {({navigation}) => <Perfil navigation={navigation} sairDoPerfil={sairDoPerfil} />}
           </Tab.Screen>
+
+          <Stack.Screen name="Endereco" component={Endereco} />
+          
         </Tab.Navigator>
       ) : (
         <Stack.Navigator>

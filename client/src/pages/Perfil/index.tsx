@@ -23,6 +23,7 @@ const Perfil: React.FC<NavbarProps> = ({navigation, sairDoPerfil}) => {
       name: 'Endereço',
       url: '../../assets/sem_usuario.png',
       subtitle: '',
+      function: () => navigation.navigate('Endereco'),
     },
     {
       name: 'Sair',

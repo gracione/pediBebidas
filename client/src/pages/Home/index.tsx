@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import Navbar from '../../components/Navbar';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 interface NavbarProps {
