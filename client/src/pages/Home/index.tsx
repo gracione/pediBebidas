@@ -7,7 +7,7 @@ interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const HomeScreen: React.FC<NavbarProps> = ({navigation}) => {
+const Home: React.FC<NavbarProps> = () => {
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -17,4 +17,4 @@ const HomeScreen: React.FC<NavbarProps> = ({navigation}) => {
   );
 };
 
-export default HomeScreen;
+export default Home;
