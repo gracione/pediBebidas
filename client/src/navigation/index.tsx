@@ -7,11 +7,8 @@ import Home from '../pages/Home';
 import RegisterScreen from '../screens/RegisterScreen';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {removeToken} from '../service/api';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import Navbar from '../components/Navbar';
 import Pedidos from '../pages/Pedidos';
 import Perfil from '../pages/Perfil';
-import Endereco from '../pages/Endereco';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,24 +29,21 @@ export const Navigation: React.FC<NavigationProps> = ({navigation}) => {
     <NavigationContainer>
       {/* {isLoggedIn && <Navbar navigation={navigation} sairDoPerfil={sairDoPerfil} />} */}
       {isLoggedIn ? (
-        <Tab.Navigator>
-          <Tab.Screen
-            name="Home"
-            component={Home}
-            options={{headerShown: false}}
-          />
-          <Tab.Screen
-            name="Pedidos"
-            component={Pedidos}
-            options={{headerShown: false}}
-          />
-          <Tab.Screen name="Perfil" options={{headerShown: false}}>
-            {({navigation}) => <Perfil navigation={navigation} sairDoPerfil={sairDoPerfil} />}
-          </Tab.Screen>
-
-          <Stack.Screen name="Endereco" component={Endereco} />
-          
-        </Tab.Navigator>
+          <Tab.Navigator screenOptions={{headerShown: false}}>
+            <Tab.Screen
+              name="Home"
+              component={Home}
+            />
+            <Tab.Screen
+              name="Pedidos"
+              component={Pedidos}
+            />
+            <Tab.Screen name="Perfil">
+              {() => (
+                <Perfil sairDoPerfil={sairDoPerfil} />
+              )}
+            </Tab.Screen>
+          </Tab.Navigator>
       ) : (
         <Stack.Navigator>
           <Stack.Screen name="Login">

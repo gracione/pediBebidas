@@ -1,14 +1,25 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ListItem, Avatar} from 'react-native-elements';
+import { View } from 'react-native';
+import { ListItem, Avatar } from 'react-native-elements';
+import Endereco from '../../pages/Endereco';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 interface NavbarProps {
-  navigation: NativeStackNavigationProp<any>;
   sairDoPerfil: () => void;
+  navigation: any;
 }
 
-const Perfil: React.FC<NavbarProps> = ({navigation, sairDoPerfil}) => {
-  const list = [
+const Stack = createNativeStackNavigator();
+
+interface MenuItem {
+  name: string;
+  url: string;
+  subtitle: string;
+  function?: () => void;
+}
+
+const Menu: React.FC<NavbarProps> = ({ navigation, sairDoPerfil }) => {
+  const list: MenuItem[] = [
     {
       name: 'Ajuda',
       url: '../../assets/sem_usuario.png',
@@ -32,23 +43,31 @@ const Perfil: React.FC<NavbarProps> = ({navigation, sairDoPerfil}) => {
       function: sairDoPerfil,
     },
   ];
+
   return (
-    <View style={{flex: 1}}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}></View>
-      {list.map((l, i) => (
-        <ListItem key={i} bottomDivider onPress={l.function}>
-          <Avatar source={{uri: l.url}} />
+    <View style={{ flex: 1 }}>
+      {list.map((item, index) => (
+        <ListItem key={index} bottomDivider onPress={item.function}>
+          <Avatar source={{ uri: item.url }} />
           <ListItem.Content>
-            <ListItem.Title>{l.name}</ListItem.Title>
-            <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
+            <ListItem.Title>{item.name}</ListItem.Title>
+            <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
       ))}
+    </View>
+  );
+};
+
+const Perfil: React.FC<NavbarProps> = ({ sairDoPerfil }) => {
+  return (
+    <View style={{ flex: 1 }}>
+      <Stack.Navigator>
+        <Stack.Screen name="Menu">
+          {props => <Menu {...props} sairDoPerfil={sairDoPerfil} />}
+        </Stack.Screen>
+        <Stack.Screen name="Endereco" component={Endereco} />
+      </Stack.Navigator>
     </View>
   );
 };
