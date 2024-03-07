@@ -30,6 +30,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
 
       saveToken(response.data.token);
       setIsLoggedIn(true);
+      if (response.data.token) {
+        api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      }
+      
       navigation.navigate('Home');
     } catch (error) {
       if (error.response && error.response.status === 400) {
