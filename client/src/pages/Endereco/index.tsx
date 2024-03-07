@@ -18,7 +18,7 @@ const Endereco: React.FC = () => {
 
   const handleSave = async () => {
     try {
-      const response = await api.post('endereco', endereco);
+      const response = await api.put('update-address-user', endereco);
       Alert.alert('Endereço salvo com sucesso!');
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {

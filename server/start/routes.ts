@@ -19,6 +19,7 @@ router.get('/', async () => {
 })
 
 router.resource('endereco', EnderecosController).apiOnly()
+router.put('/update-address-user', [EnderecosController, 'updateAddressUser']).use(middleware.auth({guards: ['api']}))
 router.post('usuario', [UsuarioController, 'store'])
 router.post('usuario/autenticar', [UsuarioController,'autenticarUsuario'])
 
