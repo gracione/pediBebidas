@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Button } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Estabelecimento from '../Estabelecimento';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator();
 interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const Home: React.FC<NavbarProps> = () => {
+const Estabelecimentos: React.FC<NavbarProps> = (navigation) => {
   const [searchQuery, setSearchQuery] = useState('');
   let estabelecimentos = ['JM Distribuidora', 'Altas Horas'];
 
@@ -31,14 +34,27 @@ const Home: React.FC<NavbarProps> = () => {
       </View>
       <ScrollView style={{ flex: 1 }}>
         {estabelecimentos.map((estabelecimento, index) => (
-          <TouchableOpacity key={index} onPress={() => console.log(estabelecimento)}>
-            <View style={styles.card}>
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('Estabelecimento')}>
+            <View style={styles.card} >
               <Text style={styles.cardText}>{estabelecimento}</Text>
             </View>
           </TouchableOpacity>
         ))}
         <Text>Conteúdo da tela principal</Text>
       </ScrollView>
+    </View>
+  );
+};
+
+const Home: React.FC<NavbarProps> = () => {
+  return (
+    <View style={{ flex: 1 }}>
+      <Stack.Navigator>
+        <Stack.Screen name="Menu">
+          {props => <Estabelecimentos {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="Estabelecimento" component={Estabelecimento} />
+      </Stack.Navigator>
     </View>
   );
 };
