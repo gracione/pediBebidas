@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Button } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface NavbarProps {
@@ -7,11 +7,29 @@ interface NavbarProps {
 }
 
 const Home: React.FC<NavbarProps> = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   let estabelecimentos = ['JM Distribuidora', 'Altas Horas'];
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Pesquisar"
+          value={searchQuery}
+          onChangeText={handleSearch}
+        />
+        <Button
+          title="Pesquisar"
+          onPress={() => console.log("Pesquisar")}
+          color="#a199ee"
+        />
+      </View>
+      <ScrollView style={{ flex: 1 }}>
         {estabelecimentos.map((estabelecimento, index) => (
           <TouchableOpacity key={index} onPress={() => console.log(estabelecimento)}>
             <View style={styles.card}>
@@ -20,12 +38,34 @@ const Home: React.FC<NavbarProps> = () => {
           </TouchableOpacity>
         ))}
         <Text>Conteúdo da tela principal</Text>
-      </View>
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  searchContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 5,
+    paddingTop: 14,
+    backgroundColor: '#fff',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  searchInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingLeft: 10,
+    marginBottom: 10,
+    width: '80%',
+  },
   card: {
     backgroundColor: '#71ff64',
     borderRadius: 8,
