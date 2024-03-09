@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,26 +7,27 @@ import {
   TextInput,
   ScrollView,
   Button,
-} from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import Estabelecimento from '../Estabelecimento';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+} from "react-native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import Estabelecimento from "../Estabelecimento";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Octicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
   navigation: any;
 }
 
-const Estabelecimentos: React.FC<NavbarProps> = ({navigation}) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  let estabelecimentos = ['JM Distribuidora', 'Altas Horas'];
+const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  let estabelecimentos = ["JM Distribuidora", "Altas Horas"];
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -34,17 +35,14 @@ const Estabelecimentos: React.FC<NavbarProps> = ({navigation}) => {
           value={searchQuery}
           onChangeText={handleSearch}
         />
-        <Button
-          title="Pesquisar"
-          onPress={() => console.log('Pesquisar')}
-          color="#a199ee"
-        />
+        <Octicons name="search" size={24} color="black" />
       </View>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         {estabelecimentos.map((estabelecimento, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => navigation.navigate('Estabelecimento')}>
+            onPress={() => navigation.navigate("Estabelecimento")}
+          >
             <View style={styles.card}>
               <Text style={styles.cardText}>{estabelecimento}</Text>
             </View>
@@ -57,10 +55,10 @@ const Estabelecimentos: React.FC<NavbarProps> = ({navigation}) => {
 
 const Home: React.FC<NavbarProps> = () => {
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Stack.Navigator>
         <Stack.Screen name="Menu">
-          {props => <Estabelecimentos {...props} />}
+          {(props) => <Estabelecimentos {...props} />}
         </Stack.Screen>
         <Stack.Screen name="Estabelecimento" component={Estabelecimento} />
       </Stack.Navigator>
@@ -70,41 +68,41 @@ const Home: React.FC<NavbarProps> = () => {
 
 const styles = StyleSheet.create({
   searchContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 5,
     paddingTop: 14,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
   searchInput: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     borderRadius: 8,
     paddingLeft: 10,
     marginBottom: 10,
-    width: '80%',
+    width: "80%",
   },
   card: {
-    backgroundColor: '#71ff64',
+    backgroundColor: "#71ff64",
     borderRadius: 8,
     padding: 20,
     marginVertical: 10,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
   cardText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
