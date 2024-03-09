@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Button } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  Button,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Estabelecimento from '../Estabelecimento';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
-  navigation: NativeStackNavigationProp<any>;
+  navigation: any;
 }
 
-const Estabelecimentos: React.FC<NavbarProps> = (navigation) => {
+const Estabelecimentos: React.FC<NavbarProps> = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   let estabelecimentos = ['JM Distribuidora', 'Altas Horas'];
 
@@ -18,7 +26,7 @@ const Estabelecimentos: React.FC<NavbarProps> = (navigation) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -28,19 +36,20 @@ const Estabelecimentos: React.FC<NavbarProps> = (navigation) => {
         />
         <Button
           title="Pesquisar"
-          onPress={() => console.log("Pesquisar")}
+          onPress={() => console.log('Pesquisar')}
           color="#a199ee"
         />
       </View>
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{flex: 1}}>
         {estabelecimentos.map((estabelecimento, index) => (
-          <TouchableOpacity key={index} onPress={() => navigation.navigate('Estabelecimento')}>
-            <View style={styles.card} >
+          <TouchableOpacity
+            key={index}
+            onPress={() => navigation.navigate('Estabelecimento')}>
+            <View style={styles.card}>
               <Text style={styles.cardText}>{estabelecimento}</Text>
             </View>
           </TouchableOpacity>
         ))}
-        <Text>Conteúdo da tela principal</Text>
       </ScrollView>
     </View>
   );
@@ -48,7 +57,7 @@ const Estabelecimentos: React.FC<NavbarProps> = (navigation) => {
 
 const Home: React.FC<NavbarProps> = () => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <Stack.Navigator>
         <Stack.Screen name="Menu">
           {props => <Estabelecimentos {...props} />}
@@ -69,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     elevation: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
@@ -89,7 +98,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     elevation: 2,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
