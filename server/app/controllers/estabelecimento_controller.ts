@@ -4,9 +4,6 @@ import Estabelecimento from '#models/estabelecimento'
 // import { ValidateCreate } from '#validators/estabelecimento'
 
 export default class EstabelecimentoController {
-  constructor() {
-    // super(Estabelecimento)
-  }
 
   async store({ auth,request, response }: HttpContext) {
       try {
@@ -35,6 +32,19 @@ export default class EstabelecimentoController {
         console.log(error)
       return response.status(500).send({ error: 'Erro interno do servidor' })
     }
+  }
+
+  async show({ auth, params, response }: HttpContext) {
+    const idUsuario = auth.user?.id
+  
+    const estabelecimento = await Estabelecimento.query()
+    .where('id_usuario', idUsuario);
+  
+    if (!estabelecimento) {
+      return response.notFound({ message: `Estabelecimento not found for user with ID ${idUsuario}` })
+    }
+  
+    return response.ok(estabelecimento)
   }
 
 }

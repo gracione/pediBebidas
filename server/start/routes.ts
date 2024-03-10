@@ -24,6 +24,7 @@ router.put('/endereco', [EnderecosController, 'updateAddressUser']).use(middlewa
 router.get('/endereco', [EnderecosController, 'show']).use(middleware.auth({guards: ['api']}))
 
 router.post('/estabelecimento', [EstabelecimentoController, 'store']).use(middleware.auth({guards: ['api']}))
+router.get('/estabelecimento', [EstabelecimentoController, 'show']).use(middleware.auth({guards: ['api']}))
 
 router.post('usuario', [UsuarioController, 'store'])
 router.post('usuario/autenticar', [UsuarioController,'autenticarUsuario'])
