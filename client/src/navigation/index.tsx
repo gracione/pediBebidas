@@ -69,7 +69,7 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
               <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />
             )}
           </Stack.Screen>
-          <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          <Stack.Screen name="Cadastrar Usuario" component={RegisterScreen} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

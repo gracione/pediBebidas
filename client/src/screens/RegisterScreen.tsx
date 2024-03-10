@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Alert, StyleSheet, Text } from 'react-native';
+import { View, Alert, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styled from 'styled-components/native';
 import Input from '../components/Input';
@@ -12,8 +12,9 @@ const Container = styled.View`
   padding: 16px;
 `;
 
-const RegisterButton = styled.Button`
-  margin-top: 10px;
+const ErrorText = styled.Text`
+  color: red;
+  margin: 10px;
 `;
 
 const RegisterScreen: React.FC = () => {
@@ -151,17 +152,10 @@ const RegisterScreen: React.FC = () => {
         onChangeText={(text) => setLongitude(text)}
         keyboardType="numeric"
       />
-      {error && <Text style={styles.error}>{error}</Text>}
+      {error && <ErrorText>{error}</ErrorText>}
       <Button title="Registrar" onPress={handleRegister} />
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  error: {
-    color: 'red',
-    margin: 10,
-  },
-});
 
 export default RegisterScreen;

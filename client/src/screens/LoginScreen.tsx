@@ -4,8 +4,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import LogoImage from '../assets/logo.png';
-import api, {saveToken} from '../service/api';
-import {LogoStyle, ImagemStyle} from './styles';
+import api, { saveToken } from '../service/api';
+import { LogoStyle, ImagemStyle, Container, ErrorText } from './styles'; // Import styled-components for React Native
 
 interface LoginScreenProps {
   navigation: NativeStackNavigationProp<any>;
@@ -45,11 +45,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   };
 
   const handleRegistrar = () => {
-    navigation.navigate('RegisterScreen');
+    navigation.navigate('Cadastrar Usuario');
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       <LogoStyle>
         <ImagemStyle source={LogoImage}/>
       </LogoStyle>
@@ -59,30 +59,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
         secureTextEntry
         onChangeText={text => setPassword(text)}
       />
-      {error && <Text style={styles.error}>{error}</Text>}
+      {error && <ErrorText>{error}</ErrorText>}
       <Button title="Login" onPress={() => handleLogin(email, password)} />
       <Button title="Registrar" onPress={handleRegistrar} />
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    width: '80%',
-    marginBottom: 15,
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  error: {
-    color: 'red',
-    margin: 10,
-  },
-});
 
 export default LoginScreen;
