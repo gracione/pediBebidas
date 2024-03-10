@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
-  StyleSheet,
   TouchableOpacity,
-  TextInput,
   ScrollView,
   Button,
 } from "react-native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Estabelecimento from "../Estabelecimento";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Octicons } from "@expo/vector-icons";
 import InputSearch from "../../components/InputSearch";
+import styled from "styled-components/native"; // Import styled-components for React Native
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
@@ -28,27 +24,25 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      {/* aqui seja um components */}
+    <Container>
       <InputSearch
         placeholder="Pesquisar"
         value={searchQuery}
         onChangeText={handleSearch}
       />
-      {/* ate aqui */}
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView>
         {estabelecimentos.map((estabelecimento, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => navigation.navigate("Estabelecimento")}
           >
-            <View style={styles.card}>
-              <Text style={styles.cardText}>{estabelecimento}</Text>
-            </View>
+            <Card>
+              <CardText>{estabelecimento}</CardText>
+            </Card>
           </TouchableOpacity>
         ))}
       </ScrollView>
-    </View>
+    </Container>
   );
 };
 
@@ -65,22 +59,21 @@ const Home: React.FC<NavbarProps> = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#71ff64",
-    borderRadius: 8,
-    padding: 20,
-    marginVertical: 10,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  cardText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
+const Container = styled.View`
+  flex: 1;
+`;
+
+const Card = styled.View`
+  background-color: #c5c5c5;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 4px 30px;
+  padding: 15px 30px;
+`;
+
+const CardText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+`;
 
 export default Home;
