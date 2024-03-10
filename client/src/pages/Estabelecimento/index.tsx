@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { TouchableOpacity, ScrollView } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FontAwesome5 } from "@expo/vector-icons";
+import styled from "styled-components/native"; // Import styled-components for React Native
 
 interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
@@ -20,65 +15,43 @@ const Estabelecimento: React.FC<NavbarProps> = () => {
   ];
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.searchContainer}></View>
-      <ScrollView style={{ flex: 1 }}>
+    <Container>
+      <ScrollView>
         {produtos.map((produto, index) => (
           <TouchableOpacity key={index}>
-            <View style={styles.card}>
-              <Text style={styles.cardText}>{produto.nome}</Text>
+            <Card>
+              <CardText>{produto.nome}</CardText>
               <FontAwesome5
                 name="cart-plus"
                 size={24}
                 color="black"
                 onPress={() => console.log(produto.nome)}
               />
-            </View>
+            </Card>
           </TouchableOpacity>
         ))}
       </ScrollView>
-    </View>
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  searchContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 5,
-    paddingTop: 14,
-    backgroundColor: "#fff",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  searchInput: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingLeft: 10,
-    marginBottom: 10,
-    width: "80%",
-  },
-  card: {
-    backgroundColor: "#71ff64",
-    borderRadius: 8,
-    padding: 20,
-    marginVertical: 10,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  cardText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
+const Container = styled.View`
+  flex: 1;
+`;
+
+const Card = styled.View`
+  background-color: #a3c2a0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  margin: 5px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const CardText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+`;
 
 export default Estabelecimento;
