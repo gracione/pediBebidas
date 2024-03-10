@@ -31,7 +31,6 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
     <View style={{ flex: 1 }}>
       {/* aqui seja um components */}
       <InputSearch
-        style={styles.searchInput}
         placeholder="Pesquisar"
         value={searchQuery}
         onChangeText={handleSearch}
@@ -67,38 +66,6 @@ const Home: React.FC<NavbarProps> = () => {
 };
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 5,
-    paddingTop: 14,
-    backgroundColor: "#fff",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  searchInput: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 4,
-    paddingLeft: 10,
-    marginBottom: 10,
-    width: "80%",
-  },
-  searchButton: {
-    height: 40,
-    borderColor: "gray",
-    alignItems: "center",
-    borderWidth: 1,
-    paddingLeft: 10,
-    paddingTop: 5,
-    marginBottom: 10,
-    width: 40,
-  },
   card: {
     backgroundColor: "#71ff64",
     borderRadius: 8,

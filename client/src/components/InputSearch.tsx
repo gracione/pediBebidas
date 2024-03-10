@@ -32,9 +32,9 @@ const ButtonSearchContainer = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   padding-top: 14px;
-  width: 100%;
   border: solid;
-  padding: 3px;
+  border-radius: 3px;
+  padding: 5px 10px;
   margin: 10px 30px;
 `;
 
