@@ -43,7 +43,7 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
           <Tab.Screen
             name="Pedidos"
             options={{
-              tabBarLabel: "Home",
+              tabBarLabel: "Pedidos",
               tabBarIcon: ({ color, size }) => (
                 <Entypo name="drink" size={color} size={size} />
               ),
@@ -53,7 +53,7 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
           <Tab.Screen
             name="Perfil"
             options={{
-              tabBarLabel: "Home",
+              tabBarLabel: "Perfil",
               tabBarIcon: ({ color, size }) => (
                 <AntDesign name="profile" size={color} size={size} />
               ),

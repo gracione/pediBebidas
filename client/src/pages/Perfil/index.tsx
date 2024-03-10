@@ -2,6 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {ListItem, Avatar} from 'react-native-elements';
 import Endereco from '../../pages/Endereco';
+import MeusEstabelecimentos from '../../pages/MeusEstabelecimentos';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 interface NavbarProps {
@@ -37,6 +38,12 @@ const Menu: React.FC<NavbarProps> = ({navigation, sairDoPerfil}) => {
       function: () => navigation.navigate('Endereco'),
     },
     {
+      name: 'Meus Estabelecimentos',
+      url: '../../assets/sem_usuario.png',
+      subtitle: '',
+      function: () => navigation.navigate('Meus Estabelecimentos'),
+    },
+    {
       name: 'Sair',
       url: '../../assets/sem_usuario.png',
       subtitle: '',
@@ -66,6 +73,7 @@ const Perfil: React.FC<NavbarProps> = ({sairDoPerfil}) => {
         <Stack.Screen name="Menu">
           {props => <Menu {...props} sairDoPerfil={sairDoPerfil} />}
         </Stack.Screen>
+        <Stack.Screen name="Meus Estabelecimentos" component={MeusEstabelecimentos} />
         <Stack.Screen name="Endereco" component={Endereco} />
       </Stack.Navigator>
     </View>
