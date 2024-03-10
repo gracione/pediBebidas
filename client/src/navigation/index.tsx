@@ -28,7 +28,6 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
 
   return (
     <NavigationContainer>
-      {/* {isLoggedIn && <Navbar navigation={navigation} sairDoPerfil={sairDoPerfil} />} */}
       {isLoggedIn ? (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
           <Tab.Screen

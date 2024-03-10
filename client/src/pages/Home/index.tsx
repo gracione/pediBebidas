@@ -28,6 +28,7 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* aqui seja um components */}
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -35,8 +36,9 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
           value={searchQuery}
           onChangeText={handleSearch}
         />
-        <Octicons name="search" size={24} color="black" />
+        <Octicons name="search" size={24} color="black" style={styles.searchButton} />
       </View>
+      {/* ate aqui */}
       <ScrollView style={{ flex: 1 }}>
         {estabelecimentos.map((estabelecimento, index) => (
           <TouchableOpacity
@@ -79,15 +81,26 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+    
   },
   searchInput: {
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 4,
     paddingLeft: 10,
     marginBottom: 10,
     width: "80%",
+  },
+  searchButton: {
+    height: 40,
+    borderColor: "gray",
+    alignItems: "center",
+    borderWidth: 1,
+    paddingLeft: 10,
+    paddingTop: 5,
+    marginBottom: 10,
+    width: 40,
   },
   card: {
     backgroundColor: "#71ff64",

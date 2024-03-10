@@ -1,30 +1,38 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-} from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+} from "react-native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
 const Estabelecimento: React.FC<NavbarProps> = () => {
-  let produtos = [{nome: 'coca', valor: '12,00 R$'}, {nome: 'pepsi', valor: '10,00 R$'}];
+  let produtos = [
+    { nome: "coca", valor: "12,00 R$" },
+    { nome: "pepsi", valor: "10,00 R$" },
+  ];
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <View style={styles.searchContainer}></View>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         {produtos.map((produto, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => console.log(produto.nome)}>
+          <TouchableOpacity key={index}>
             <View style={styles.card}>
               <Text style={styles.cardText}>{produto.nome}</Text>
+              <FontAwesome5
+                name="cart-plus"
+                size={24}
+                color="black"
+                onPress={() => console.log(produto.nome)}
+              />
             </View>
           </TouchableOpacity>
         ))}
@@ -35,41 +43,41 @@ const Estabelecimento: React.FC<NavbarProps> = () => {
 
 const styles = StyleSheet.create({
   searchContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 5,
     paddingTop: 14,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
   searchInput: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     borderRadius: 8,
     paddingLeft: 10,
     marginBottom: 10,
-    width: '80%',
+    width: "80%",
   },
   card: {
-    backgroundColor: '#71ff64',
+    backgroundColor: "#71ff64",
     borderRadius: 8,
     padding: 20,
     marginVertical: 10,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
   cardText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
