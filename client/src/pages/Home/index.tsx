@@ -12,6 +12,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Estabelecimento from "../Estabelecimento";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Octicons } from "@expo/vector-icons";
+import InputSearch from "../../components/InputSearch";
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
@@ -29,15 +30,12 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       {/* aqui seja um components */}
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Pesquisar"
-          value={searchQuery}
-          onChangeText={handleSearch}
-        />
-        <Octicons name="search" size={24} color="black" style={styles.searchButton} />
-      </View>
+      <InputSearch
+        style={styles.searchInput}
+        placeholder="Pesquisar"
+        value={searchQuery}
+        onChangeText={handleSearch}
+      />
       {/* ate aqui */}
       <ScrollView style={{ flex: 1 }}>
         {estabelecimentos.map((estabelecimento, index) => (
@@ -81,7 +79,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    
   },
   searchInput: {
     height: 40,
