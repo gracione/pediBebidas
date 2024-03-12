@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
-  ScrollView,
-  Button,
+  ScrollView
 } from "react-native";
 import Estabelecimento from "../Estabelecimento";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InputSearch from "../../components/InputSearch";
 import styled from "styled-components/native"; // Import styled-components for React Native
+import api from "../../service/api";
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
@@ -17,7 +17,25 @@ interface NavbarProps {
 
 const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  let estabelecimentos = ["JM Distribuidora", "Altas Horas"];
+  const [estabelecimentos, setEstabelecimentos] = useState([]);
+  // let estabelecimentos = ["JM Distribuidora", "Altas Horas"];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("estabelecimento");
+        setEstabelecimentos(response.data);
+      } catch (error) {
+        console.error(error);
+        Alert.alert(
+          "Erro ao carregar endereço. Por favor, tente novamente mais tarde."
+        );
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -37,7 +55,7 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
             onPress={() => navigation.navigate("Estabelecimento")}
           >
             <Card>
-              <CardText>{estabelecimento}</CardText>
+              <CardText>{estabelecimento.nome}</CardText>
             </Card>
           </TouchableOpacity>
         ))}

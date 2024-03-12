@@ -20,7 +20,7 @@ const MeusEstabelecimentos: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("estabelecimento");
+        const response = await api.get("estabelecimento-por-usuario");
         setResponse(response.data);
       } catch (error) {
         console.error(error);
@@ -31,7 +31,7 @@ const MeusEstabelecimentos: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [addEndereco]);
 
   const handleChange = (field: string, value: string) => {
     setEstabelecimento({ ...estabelecimento, [field]: value });
@@ -39,7 +39,7 @@ const MeusEstabelecimentos: React.FC = () => {
 
   const handleSave = async () => {
     try {
-      const response = await api.post("estabelecimento", estabelecimento);
+      await api.post("estabelecimento", estabelecimento);
       Alert.alert("Endereço salvo com sucesso!");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -105,13 +105,11 @@ const MeusEstabelecimentos: React.FC = () => {
         onPress={() => setAddEndereco(true)}
       />
 
-      <View>
         {response.map((estabelecimentoF: any, index: number) => (
           <Card>
             <Text key={index}>{estabelecimentoF.nome}</Text>
           </Card>
         ))}
-      </View>
     </Container>
   );
 };
@@ -135,10 +133,10 @@ const StyledTextInput = styled(TextInput)`
 `;
 
 const Card = styled.View`
-  background-color: #a3c2a0;
+  background-color: #9b9c9b;
   border-radius: 8px;
   width: 90%;
-  padding: 5px 20px;
+  padding: 15px 20px;
   margin: 3px 5px;
   display: flex;
   flex-direction: row;

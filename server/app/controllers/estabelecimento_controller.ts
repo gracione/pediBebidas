@@ -47,4 +47,9 @@ export default class EstabelecimentoController {
     return response.ok(estabelecimento)
   }
 
+  async index({ response }: HttpContext) {
+    const data = await Estabelecimento.all()
+    return response.ok(data)
+  }
+
 }
