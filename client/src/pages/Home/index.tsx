@@ -2,23 +2,28 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Alert
 } from "react-native";
-import Estabelecimento from "../Estabelecimento";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InputSearch from "../../components/InputSearch";
 import styled from "styled-components/native"; // Import styled-components for React Native
 import api from "../../service/api";
+import Estabelecimento from "../Estabelecimento";
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
   navigation: any;
 }
 
+interface Estabelecimento {
+  id: number;
+  nome: string;
+}
+
 const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [estabelecimentos, setEstabelecimentos] = useState([]);
-  // let estabelecimentos = ["JM Distribuidora", "Altas Horas"];
+  const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +41,6 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
     fetchData();
   }, []);
 
-
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
@@ -49,10 +53,10 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
         onChangeText={handleSearch}
       />
       <ScrollView>
-        {estabelecimentos.map((estabelecimento, index) => (
+        {estabelecimentos.map((estabelecimento) => (
           <TouchableOpacity
-            key={index}
-            onPress={() => navigation.navigate("Estabelecimento")}
+            key={estabelecimento.id}
+            onPress={() => navigation.navigate("Estabelecimento", { id: estabelecimento.id })}
           >
             <Card>
               <CardText>{estabelecimento.nome}</CardText>
@@ -68,9 +72,7 @@ const Home: React.FC<NavbarProps> = () => {
   return (
     <View style={{ flex: 1 }}>
       <Stack.Navigator>
-        <Stack.Screen name="Menu">
-          {(props) => <Estabelecimentos {...props} />}
-        </Stack.Screen>
+        <Stack.Screen name="Menu" component={Estabelecimentos} />
         <Stack.Screen name="Estabelecimento" component={Estabelecimento} />
       </Stack.Navigator>
     </View>
@@ -84,7 +86,6 @@ const Container = styled.View`
 const Card = styled.View`
   background-color: #c5c5c5;
   border-radius: 8px;
-  padding: 20px;
   margin: 4px 30px;
   padding: 15px 30px;
 `;
