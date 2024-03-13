@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InputSearch from "../../components/InputSearch";
 import styled from "styled-components/native"; // Import styled-components for React Native
 import api from "../../service/api";
-import Estabelecimento from "../Estabelecimento";
+import Estabelecimento from "./Estabelecimento";
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {

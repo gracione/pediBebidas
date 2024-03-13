@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, TextInput, Button, Alert, Text } from "react-native";
 import styled from "styled-components/native";
-import api from "../../service/api";
+import api from "../../../service/api";
 import { Ionicons } from "@expo/vector-icons";
 
 const MeusEstabelecimentos: React.FC = () => {
