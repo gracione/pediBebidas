@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, TextInput, Button, Alert, Text } from "react-native";
 import styled from "styled-components/native";
-import api from "../../../service/api";
 import { Ionicons } from "@expo/vector-icons";
+import { Estabelecimento } from "./types";
+import { fetchEstabelecimentos, saveEstabelecimento } from "./api";
 
 const MeusEstabelecimentos: React.FC = () => {
-  const [estabelecimento, setEstabelecimento] = useState({
+  const [estabelecimento, setEstabelecimento] = useState<Estabelecimento>({
     nome: "",
     rua: "",
     numero: "",
@@ -14,102 +15,117 @@ const MeusEstabelecimentos: React.FC = () => {
     latitude: "",
     longitude: "",
   });
-  const [response, setResponse] = useState([]);
+  const [response, setResponse] = useState<Estabelecimento[]>([]);
   const [addEndereco, setAddEndereco] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get("estabelecimento-por-usuario");
-        setResponse(response.data);
-      } catch (error) {
-        console.error(error);
-        Alert.alert(
-          "Erro ao carregar endereço. Por favor, tente novamente mais tarde."
-        );
-      }
-    };
-
     fetchData();
   }, [addEndereco]);
 
-  const handleChange = (field: string, value: string) => {
+  const fetchData = async () => {
+    try {
+      const response = await fetchEstabelecimentos();
+      setResponse(response);
+    } catch (error) {
+      console.error(error);
+      Alert.alert(
+        "Erro ao carregar endereço. Por favor, tente novamente mais tarde."
+      );
+    }
+  };
+
+  const handleChange = (field: keyof Estabelecimento, value: string) => {
     setEstabelecimento({ ...estabelecimento, [field]: value });
   };
 
   const handleSave = async () => {
     try {
-      await api.post("estabelecimento", estabelecimento);
+      await saveEstabelecimento(estabelecimento);
       Alert.alert("Endereço salvo com sucesso!");
+      setAddEndereco(false);
+      setEstabelecimento({
+        nome: "",
+        rua: "",
+        numero: "",
+        bairro: "",
+        complementar: "",
+        latitude: "",
+        longitude: "",
+      });
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        const errorsMessages = error.response.data.errors;
-        let messages = "";
-        errorsMessages.forEach((element: any) => {
-          messages += element.message + "\n";
-        });
-        Alert.alert(messages);
-      } else {
-        console.log(error);
-        Alert.alert(
-          "Erro ao salvar endereço. Por favor, tente novamente mais tarde."
-        );
-      }
+      handleError(error);
     }
   };
 
-  if (addEndereco) {
-    return (
-      <Container>
-        <StyledTextInput
-          onChangeText={(text) => handleChange("nome", text)}
-          placeholder="Nome"
-        />
-        <StyledTextInput
-          onChangeText={(text) => handleChange("rua", text)}
-          placeholder="Rua"
-        />
-        <StyledTextInput
-          onChangeText={(text) => handleChange("numero", text)}
-          placeholder="Número"
-          keyboardType="numeric"
-        />
-        <StyledTextInput
-          onChangeText={(text) => handleChange("bairro", text)}
-          placeholder="Bairro"
-        />
-        <StyledTextInput
-          onChangeText={(text) => handleChange("complementar", text)}
-          placeholder="Complemento"
-        />
-        <StyledTextInput
-          onChangeText={(text) => handleChange("latitude", text)}
-          placeholder="Latitude"
-          keyboardType="numeric"
-        />
-        <StyledTextInput
-          onChangeText={(text) => handleChange("longitude", text)}
-          placeholder="Longitude"
-          keyboardType="numeric"
-        />
-        <Button title="Salvar" onPress={handleSave} />
-      </Container>
-    );
-  }
+  const handleError = (error: any) => {
+    if (error.response && error.response.data && error.response.data.errors) {
+      const errorsMessages = error.response.data.errors;
+      let messages = "";
+      errorsMessages.forEach((element: any) => {
+        messages += element.message + "\n";
+      });
+      Alert.alert(messages);
+    } else {
+      console.log(error);
+      Alert.alert(
+        "Erro ao salvar endereço. Por favor, tente novamente mais tarde."
+      );
+    }
+  };
+
   return (
     <Container>
-      <Ionicons
-        name="add-circle-outline"
-        size={24}
-        color="black"
-        onPress={() => setAddEndereco(true)}
-      />
+      {addEndereco ? (
+        <FormContainer>
+          <StyledTextInput
+            onChangeText={(text) => handleChange("nome", text)}
+            placeholder="Nome"
+          />
+          <StyledTextInput
+            onChangeText={(text) => handleChange("rua", text)}
+            placeholder="Rua"
+          />
+          <StyledTextInput
+            onChangeText={(text) => handleChange("numero", text)}
+            placeholder="Número"
+            keyboardType="numeric"
+          />
+          <StyledTextInput
+            onChangeText={(text) => handleChange("bairro", text)}
+            placeholder="Bairro"
+          />
+          <StyledTextInput
+            onChangeText={(text) => handleChange("complementar", text)}
+            placeholder="Complemento"
+          />
+          <StyledTextInput
+            onChangeText={(text) => handleChange("latitude", text)}
+            placeholder="Latitude"
+            keyboardType="numeric"
+          />
+          <StyledTextInput
+            onChangeText={(text) => handleChange("longitude", text)}
+            placeholder="Longitude"
+            keyboardType="numeric"
+          />
+          <Button title="Salvar" onPress={handleSave} />
+        </FormContainer>
+      ) : (
+        <>
+          <Ionicons
+            name="add-circle-outline"
+            size={24}
+            color="black"
+            onPress={() => setAddEndereco(true)}
+          />
 
-        {response.map((estabelecimentoF: any, index: number) => (
-          <Card>
-            <Text key={index}>{estabelecimentoF.nome}</Text>
-          </Card>
-        ))}
+          {response.map((estabelecimentoF, index) => (
+            <Card key={index}>
+              <Text>{estabelecimentoF.nome}</Text>
+            </Card>
+          ))}
+        </>
+      )}
     </Container>
   );
 };
@@ -119,6 +135,10 @@ const Container = styled(View)`
   justify-content: center;
   align-items: center;
   padding: 20px;
+`;
+
+const FormContainer = styled(View)`
+  width: 100%;
 `;
 
 const StyledTextInput = styled(TextInput)`
