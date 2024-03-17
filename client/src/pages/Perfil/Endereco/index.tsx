@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, TextInput, StyleSheet, Button, Alert} from 'react-native';
-import api from '../../service/api';
+import api from '../../../service/api';
 
 const Endereco: React.FC = () => {
   const [endereco, setEndereco] = useState({

@@ -1,8 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
 import {ListItem, Avatar} from 'react-native-elements';
-import Endereco from '../../pages/Endereco';
-import MeusEstabelecimentos from '../../pages/MeusEstabelecimentos';
+import Endereco from '../../pages/Perfil/Endereco';
+import MeusEstabelecimentos from '../../pages//Perfil/MeusEstabelecimentos';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 interface NavbarProps {
