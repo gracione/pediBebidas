@@ -1,36 +1,68 @@
-import React, { useState } from "react";
-import { TouchableOpacity, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { TouchableOpacity, ScrollView, TextInput } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FontAwesome5 } from "@expo/vector-icons";
-import styled from "styled-components/native"; // Import styled-components for React Native
+import styled from "styled-components/native";
+
+interface Produto {
+  nome: string;
+  valor: string;
+}
 
 interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
 const Estabelecimento: React.FC<NavbarProps> = () => {
-  let produtos = [
-    { nome: "coca", valor: "12,00 R$" },
-    { nome: "pepsi", valor: "10,00 R$" },
-  ];
+  const Produto: any = {
+    1: { nome: "coca", valor: "12.00" },
+    2: { nome: "pepsi", valor: "10.00" },
+  };
+
+  const [idsProdutos, setIdsProdutos] = useState<{
+    [key: number]: { quantidade: number };
+  }>({});
+
+  const adicionarProduto = (idProduto: number) => {
+    setIdsProdutos((prevIdsProdutos) => ({
+      ...prevIdsProdutos,
+      [idProduto]: {
+        quantidade: (prevIdsProdutos[idProduto]?.quantidade || 0) + 1,
+      },
+    }));
+  };
+
+  const [valorTotal, setValorTotal] = useState(0);
+  useEffect(() => {
+    let valorProdutos = 0;
+    const chaves = Object.keys(idsProdutos);
+    chaves.forEach((idProduto) => {
+      const quantidade = idsProdutos[idProduto].quantidade;
+      const nome = Produto[idProduto].nome;
+      const valor = Produto[idProduto].valor;
+      valorProdutos += valor * quantidade;
+    });
+    setValorTotal(valorProdutos);
+  }, [idsProdutos]);
 
   return (
     <Container>
       <ScrollView>
-        {produtos.map((produto, index) => (
-          <TouchableOpacity key={index}>
+        {Object.keys(Produto).map((key: string) => (
+          <TouchableOpacity key={key}>
             <Card>
-              <CardText>{produto.nome}</CardText>
+              <CardText>{Produto[key].nome}</CardText>
               <FontAwesome5
                 name="cart-plus"
                 size={24}
                 color="black"
-                onPress={() => console.log(produto.nome)}
+                onPress={() => adicionarProduto(key)}
               />
             </Card>
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <TextInput>{valorTotal.toFixed(2)}</TextInput>
     </Container>
   );
 };
