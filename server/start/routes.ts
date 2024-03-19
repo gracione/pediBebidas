@@ -14,17 +14,15 @@ import { middleware } from '#start/kernel'
 import EstabelecimentoController from '#controllers/estabelecimento_controller'
 
 // router.resource('endereco', EnderecosController).apiOnly()
-router.put('/endereco', [EnderecosController, 'updateAddressUser']).use(middleware.auth({guards: ['api']}))
-router.get('/endereco', [EnderecosController, 'show']).use(middleware.auth({guards: ['api']}))
-
-router.post('/estabelecimento', [EstabelecimentoController, 'store']).use(middleware.auth({guards: ['api']}))
-router.get('/estabelecimento-por-usuario', [EstabelecimentoController, 'show']).use(middleware.auth({guards: ['api']}))
-router.get('/estabelecimento', [EstabelecimentoController, 'index']).use(middleware.auth({guards: ['api']}))
+router
+  .group(() => {
+    router.put('/endereco', [EnderecosController, 'updateAddressUser'])
+    router.get('/endereco', [EnderecosController, 'show'])
+    router.post('/estabelecimento', [EstabelecimentoController, 'store'])
+    router.get('/estabelecimento-por-usuario', [EstabelecimentoController, 'show'])
+    router.get('/estabelecimento', [EstabelecimentoController, 'index'])
+  })
+  .use(middleware.auth({ guards: ['api'] }))
 
 router.post('usuario', [UsuarioController, 'store'])
-router.post('usuario/autenticar', [UsuarioController,'autenticarUsuario'])
-
-router.post('test', async ({ auth }) => {})
-  .use(middleware.auth({
-    guards: ['api']
-  }))
+router.post('usuario/autenticar', [UsuarioController, 'autenticarUsuario'])
