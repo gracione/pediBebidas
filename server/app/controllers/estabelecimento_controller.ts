@@ -1,16 +1,24 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Endereco from '#models/endereco'
+import Usuario from '#models/usuario'
 import Estabelecimento from '#models/estabelecimento'
-// import { ValidateCreate } from '#validators/estabelecimento'
+import UserTypes from '../Enums/UserTypes.js'
 
 export default class EstabelecimentoController {
-
   async store({ auth,request, response }: HttpContext) {
       try {
-          const EstabelecimentoDate = request.all()
-        //   await ValidateCreate.validate(EstabelecimentoDate)
+        const EstabelecimentoDate = request.all()
         const idUsuario = auth.user?.id
-        
+
+        const instance = await Usuario.find(idUsuario);
+        if (instance) {
+            instance.merge({ id_tipo_usuario: UserTypes.ADM_ESTABELECIMENTO });
+            await instance.save();
+            console.log("Tipo de usuário atualizado com sucesso para ADM_ESTABELECIMENTO");
+        } else {
+            console.error("Usuário não encontrado.");
+        }
+  
         const enderecoData = request.only([
             'rua',
             'numero',
