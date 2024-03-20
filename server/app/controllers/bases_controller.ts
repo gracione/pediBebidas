@@ -3,17 +3,10 @@ import { BaseModel } from '@adonisjs/lucid/build/src/Orm/BaseModel'
 
 export default class BaseController {
   protected Model: typeof BaseModel
-  protected ValidateCreate;
-  protected ValidateUpdate;
 
   constructor(model: typeof BaseModel) {
     this.Model = model
   }
-
-  async setValidate({ ValidateCreate, ValidateUpdate }) {
-    this.ValidateCreate = ValidateCreate;
-    this.ValidateUpdate = ValidateUpdate;
-}
 
   async index({ response }: HttpContext) {
     const data = await this.Model.all()
@@ -31,8 +24,7 @@ export default class BaseController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = request.all();
-    await this.ValidateCreate.validate(data);
+    const data = request.all()
     const instance = await this.Model.create(data)
     return response.created(instance)
   }
@@ -44,7 +36,7 @@ export default class BaseController {
       return response.notFound({ message: `${this.Model.name} not found` })
     }
 
-    const data = request.only(this.Model.$columns.map(column => column.columnName))
+    const data = request.only(this.Model.$columns.map((column) => column.columnName))
     instance.merge(data)
     await instance.save()
 

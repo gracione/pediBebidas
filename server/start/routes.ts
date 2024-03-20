@@ -16,7 +16,7 @@ import EstabelecimentoController from '#controllers/estabelecimento_controller'
 // router.resource('endereco', EnderecosController).apiOnly()
 router
   .group(() => {
-    router.put('/endereco', [EnderecosController, 'updateAddressUser'])
+    router.put('/endereco', [EnderecosController, 'updateAddressUser']).use(middleware.ValidateCreate())
     router.get('/endereco', [EnderecosController, 'show'])
     router.post('/estabelecimento', [EstabelecimentoController, 'store'])
     router.get('/estabelecimento-por-usuario', [EstabelecimentoController, 'show'])
