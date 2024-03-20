@@ -18,11 +18,11 @@ router
   .group(() => {
     router.put('/endereco', [EnderecosController, 'updateAddressUser']).use(middleware.ValidateCreate())
     router.get('/endereco', [EnderecosController, 'show'])
-    router.post('/estabelecimento', [EstabelecimentoController, 'store'])
+    router.post('/estabelecimento', [EstabelecimentoController, 'store']).use(middleware.ValidateCreate())
     router.get('/estabelecimento-por-usuario', [EstabelecimentoController, 'show'])
     router.get('/estabelecimento', [EstabelecimentoController, 'index'])
   })
   .use(middleware.auth({ guards: ['api'] }))
 
-router.post('usuario', [UsuarioController, 'store'])
+router.post('usuario', [UsuarioController, 'store']).use(middleware.ValidateCreate())
 router.post('usuario/autenticar', [UsuarioController, 'autenticarUsuario'])

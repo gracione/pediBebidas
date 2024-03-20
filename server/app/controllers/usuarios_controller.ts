@@ -2,8 +2,8 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Usuario from '#models/usuario'
 import Endereco from '#models/endereco'
 import BaseController from './bases_controller.js'
-import { ValidateCreate, ValidateAutenticacao } from '#validators/usuario'
 import hash from '@adonisjs/core/services/hash'
+import UserTypes from '../Enums/UserTypes.js'
 
 export default class UsuariosController extends BaseController {
   constructor() {
@@ -12,9 +12,6 @@ export default class UsuariosController extends BaseController {
 
   async store({ request, response }: HttpContext) {
     try {
-      const data = request.all()
-      await ValidateCreate.validate(data)
-
       const { email } = request.only(['email'])
       let user = await Usuario.findBy('email', email)
 
@@ -34,6 +31,7 @@ export default class UsuariosController extends BaseController {
       ])
       const endereco = await Endereco.create(enderecoData)
       usuarioData.id_endereco = endereco.id
+      usuarioData.id_tipo_usuario = UserTypes.CLIENTE
 
       user = await Usuario.create(usuarioData)
       const token = await Usuario.accessTokens.create(user)
