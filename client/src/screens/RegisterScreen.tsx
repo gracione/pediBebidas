@@ -18,9 +18,9 @@ const ErrorText = styled.Text`
 `;
 
 const RegisterScreen: React.FC = () => {
-  const [name, setName] = useState('');
+  const [nome, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [telefone, setTelefone] = useState('');
+  const [telefone, setTelefone] = useState('000');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
@@ -34,31 +34,31 @@ const RegisterScreen: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleRegister = async () => {
-    if (!name || !email || !dateOfBirth || !rua || !numero || !bairro || !latitude || !longitude) {
+    if (!nome || !email || !dateOfBirth || !rua || !numero || !bairro || !latitude || !longitude) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
     } else if (password.length < 8) {
       Alert.alert('Erro', 'A senha deve ter pelo menos 8 caracteres.');
     } else if (password !== confirmPassword) {
       Alert.alert('Erro', 'As senhas não coincidem.');
     } else {
-      setError(null)
+      setError(null);
       try {
-        const response = await api.post('usuario', {
-          name: name,
-          email: email,
-          password: password,
-          telefone: telefone,
-          data_nascimento: dateOfBirth,
-          showDatePicker: showDatePicker,
-          rua: rua,
-          numero: numero,
-          bairro: bairro,
-          complementar: complementar,
-          latitude: latitude,
-          longitude: longitude
-        });
-  
-        console.log(response.data);
+        const response = await api.post('usuario', 
+        {
+          nome:nome,
+          telefone:telefone,
+          email:email,
+          password:password,
+          data_nascimento:dateOfBirth,
+          rua:rua,
+          numero:numero,
+          bairro:bairro,
+          complementar:complementar,
+          latitude:latitude,
+          longitude:longitude,
+        }	);
+        console.log(response);
+        Alert.alert('Sucesso', `Registro realizado com sucesso!\nData de cadastro: ${dateOfBirth.toISOString().split('T')[0]}`);
       } catch (error) {
         if (error.response && error.response.status === 400) {
           setError(error.response.data.error);
@@ -66,8 +66,6 @@ const RegisterScreen: React.FC = () => {
           console.error('Erro ao processar a requisição:', error.message);
         }
       }
-  
-      Alert.alert('Sucesso', `Registro realizado com sucesso!\nData de Nascimento: ${dateOfBirth.toISOString().split('T')[0]}`);
     }
   };
 
@@ -75,7 +73,7 @@ const RegisterScreen: React.FC = () => {
     setShowDatePicker(true);
   };
 
-  const onDateChange = (event: Event, selectedDate?: Date) => {
+  const onDateChange = (event: any, selectedDate?: Date) => {
     setShowDatePicker(false);
     if (selectedDate) {
       setDateOfBirth(selectedDate);
@@ -86,7 +84,7 @@ const RegisterScreen: React.FC = () => {
     <Container>
       <Input
         placeholder="Nome"
-        value={name}
+        value={nome}
         onChangeText={(text) => setName(text)}
       />
       <Input
@@ -119,6 +117,13 @@ const RegisterScreen: React.FC = () => {
         onChangeText={(text) => setConfirmPassword(text)}
         secureTextEntry
       />
+            <Input
+        placeholder="Telefone"
+        value={telefone}
+        onChangeText={(text) => setTelefone(text)}
+        keyboardType="numeric"
+      />
+
       <Input
         placeholder="Rua"
         value={rua}
