@@ -53,7 +53,13 @@ export default class UsuariosController extends BaseController {
     if (!hashVerify) {
       return response.status(400).send({ error: 'Senha incorreta' })
     }
-    const token = await Usuario.accessTokens.create(user)
-    return token
+    let token = await Usuario.accessTokens.create(user)
+
+    return {
+      type: 'bearer',
+      token: token.value!.release(),
+      typeUser: user.$attributes.id_tipo_usuario
+    }
   }
+
 }

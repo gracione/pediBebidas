@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import LogoImage from '../assets/logo.png';
 import api, { saveToken } from '../service/api';
-import { LogoStyle, ImagemStyle, Container, ErrorText } from './styles'; // Import styled-components for React Native
+import { LogoStyle, ImagemStyle, Container, ErrorText } from './styles';
+import { AuthContext } from '../contexts/auth';
 
 interface LoginScreenProps {
   navigation: NativeStackNavigationProp<any>;
@@ -18,6 +18,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const authContext = React.useContext(AuthContext);
 
   const handleLogin = async (email: string, password: string) => {
     setError(null);
@@ -29,6 +30,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
       });
 
       saveToken(response.data.token);
+      authContext.setTipoUsuario(response.data.typeUser)
+      console.log("tipo de usuario? "+authContext.tipoUser);
       setIsLoggedIn(true);
       if (response.data.token) {
         api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;

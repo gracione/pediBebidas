@@ -8,8 +8,10 @@ import RegisterScreen from "../screens/RegisterScreen";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { removeToken } from "../service/api";
 import Pedidos from "../pages/Pedidos";
+import CadastrarProduto from "../pages/CadastrarProduto";
 import Perfil from "../pages/Perfil";
 import { SimpleLineIcons, AntDesign, Entypo } from "@expo/vector-icons";
+import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -19,6 +21,8 @@ interface NavigationProps {
 }
 
 export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
+  const authContext = React.useContext(AuthContext);
+
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const sairDoPerfil = () => {
@@ -50,6 +54,21 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
             }}
             component={Pedidos}
           />
+          {authContext.tipoUser === "1" ? (
+            <Tab.Screen
+              name="Cadastrar Produto"
+              options={{
+                tabBarLabel: "Cadastrar Produto",
+                tabBarIcon: ({ color, size }) => (
+                  <Entypo name="drink" size={color} size={size} />
+                ),
+              }}
+              component={CadastrarProduto}
+            />
+          ) : (
+            <></>
+          )}
+
           <Tab.Screen
             name="Perfil"
             options={{
@@ -66,7 +85,9 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
         <Stack.Navigator>
           <Stack.Screen name="Login">
             {(props) => (
-              <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />
+              <AuthProvider>
+                <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />
+              </AuthProvider>
             )}
           </Stack.Screen>
           <Stack.Screen name="Cadastrar Usuario" component={RegisterScreen} />
