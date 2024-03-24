@@ -11,7 +11,7 @@ export const AuthContext = React.createContext<AuthContextType>({
 });
 
 export const AuthProvider: React.FC = ({ children }: any) => {
-    const [tipoUser, setTipoUsuario] = React.useState("test");
+    const [tipoUser, setTipoUsuario] = React.useState("");
 
 
     return (

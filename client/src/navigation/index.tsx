@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -12,6 +12,7 @@ import CadastrarProduto from "../pages/CadastrarProduto";
 import Perfil from "../pages/Perfil";
 import { SimpleLineIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import { AuthProvider, AuthContext } from "../contexts/auth";
+import { Text } from "react-native-elements";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -21,9 +22,8 @@ interface NavigationProps {
 }
 
 export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
-  const authContext = React.useContext(AuthContext);
-
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const ADM:any = 1;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const sairDoPerfil = () => {
     removeToken();
@@ -31,68 +31,73 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
   };
 
   return (
-    <NavigationContainer>
-      {isLoggedIn ? (
-        <Tab.Navigator screenOptions={{ headerShown: false }}>
-          <Tab.Screen
-            name="Home"
-            component={Home}
-            options={{
-              tabBarLabel: "Home",
-              tabBarIcon: ({ color, size }) => (
-                <SimpleLineIcons name="home" size={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Pedidos"
-            options={{
-              tabBarLabel: "Pedidos",
-              tabBarIcon: ({ color, size }) => (
-                <Entypo name="drink" size={color} size={size} />
-              ),
-            }}
-            component={Pedidos}
-          />
-          {authContext.tipoUser === "1" ? (
-            <Tab.Screen
-              name="Cadastrar Produto"
-              options={{
-                tabBarLabel: "Cadastrar Produto",
-                tabBarIcon: ({ color, size }) => (
-                  <Entypo name="drink" size={color} size={size} />
-                ),
-              }}
-              component={CadastrarProduto}
-            />
-          ) : (
-            <></>
-          )}
-
-          <Tab.Screen
-            name="Perfil"
-            options={{
-              tabBarLabel: "Perfil",
-              tabBarIcon: ({ color, size }) => (
-                <AntDesign name="profile" size={color} size={size} />
-              ),
-            }}
-          >
-            {() => <Perfil sairDoPerfil={sairDoPerfil} />}
-          </Tab.Screen>
-        </Tab.Navigator>
-      ) : (
-        <Stack.Navigator>
-          <Stack.Screen name="Login">
-            {(props) => (
-              <AuthProvider>
-                <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />
-              </AuthProvider>
+    <AuthProvider>
+      <AuthContext.Consumer>
+        {(context) => (
+          <NavigationContainer>
+            <Text>=={context.tipoUser}</Text>
+            {isLoggedIn ? (
+              <Tab.Navigator screenOptions={{ headerShown: false }}>
+                <Tab.Screen
+                  name="Home"
+                  component={Home}
+                  options={{
+                    tabBarLabel: "Home",
+                    tabBarIcon: ({ color, size }) => (
+                      <SimpleLineIcons name="home" size={size} color={color} />
+                    ),
+                  }}
+                />
+                <Tab.Screen
+                  name="Pedidos"
+                  component={Pedidos}
+                  options={{
+                    tabBarLabel: "Pedidos",
+                    tabBarIcon: ({ color, size }) => (
+                      <Entypo name="drink" size={size} color={color} />
+                    ),
+                  }}
+                />
+                {context.tipoUser == ADM && (
+                  <Tab.Screen
+                    name="Cadastrar Produto"
+                    component={CadastrarProduto}
+                    options={{
+                      tabBarLabel: "Cadastrar Produto",
+                      tabBarIcon: ({ color, size }) => (
+                        <Entypo name="drink" size={size} color={color} />
+                      ),
+                    }}
+                  />
+                )}
+                <Tab.Screen
+                  name="Perfil"
+                  options={{
+                    tabBarLabel: "Perfil",
+                    tabBarIcon: ({ color, size }) => (
+                      <AntDesign name="profile" size={size} color={color} />
+                    ),
+                  }}
+                >
+                  {() => <Perfil sairDoPerfil={sairDoPerfil} />}
+                </Tab.Screen>
+              </Tab.Navigator>
+            ) : (
+              <Stack.Navigator>
+                <Stack.Screen name="Login">
+                  {(props) => (
+                    <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />
+                  )}
+                </Stack.Screen>
+                <Stack.Screen
+                  name="Cadastrar Usuario"
+                  component={RegisterScreen}
+                />
+              </Stack.Navigator>
             )}
-          </Stack.Screen>
-          <Stack.Screen name="Cadastrar Usuario" component={RegisterScreen} />
-        </Stack.Navigator>
-      )}
-    </NavigationContainer>
+          </NavigationContainer>
+        )}
+      </AuthContext.Consumer>
+    </AuthProvider>
   );
 };

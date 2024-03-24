@@ -28,10 +28,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
         email: email,
         password: password,
       });
-
+      
       saveToken(response.data.token);
       authContext.setTipoUsuario(response.data.typeUser)
-      console.log("tipo de usuario? "+authContext.tipoUser);
       setIsLoggedIn(true);
       if (response.data.token) {
         api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;

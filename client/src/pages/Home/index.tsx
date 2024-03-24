@@ -10,6 +10,7 @@ import InputSearch from "../../components/InputSearch";
 import styled from "styled-components/native"; // Import styled-components for React Native
 import api from "../../service/api";
 import Estabelecimento from "./Estabelecimento";
+import { AuthContext } from "../../contexts/auth";
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
@@ -68,7 +69,10 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
   );
 };
 
+
 const Home: React.FC<NavbarProps> = () => {
+  const authContext = React.useContext(AuthContext);
+  console.log("tipo de usuario ss "+authContext.tipoUser);
   return (
     <View style={{ flex: 1 }}>
       <Stack.Navigator>
