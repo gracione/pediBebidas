@@ -13,7 +13,7 @@ import Perfil from "../pages/Perfil";
 import { SimpleLineIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import { AuthProvider, AuthContext } from "../contexts/auth";
 import { Text } from "react-native-elements";
-
+import { Octicons } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -65,7 +65,7 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
                     options={{
                       tabBarLabel: "Cadastrar Produto",
                       tabBarIcon: ({ color, size }) => (
-                        <Entypo name="drink" size={size} color={color} />
+                        <Octicons name="plus-circle" size={size} color={color} />
                       ),
                     }}
                   />
