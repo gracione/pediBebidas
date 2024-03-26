@@ -37,7 +37,7 @@ const CadastrarProduto: React.FC = () => {
       return;
     }
     const response = await api.post('produto', {
-      nome,valor,selectedEstabelecimento
+      nome,valor,id_estabelecimento:selectedEstabelecimento
     });
 
     console.log("Nome:", nome);

@@ -20,8 +20,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   const [error, setError] = useState<string | null>(null);
   const authContext = React.useContext(AuthContext);
 
-  // api.defaults.headers.common['Authorization'] = `Bearer oat_MjE0.bFF4cFRqSHJaTlFaRmM3bW5BazFKWFBrdXNIQ2ZFQXZILXF5cU84OTEzNTgyMDYxMzY`;
-  // authContext.setTipoUsuario(1)
 
   const handleLogin = async (email: string, password: string) => {
     email="pedro3@gmail.com";
@@ -50,7 +48,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
       }
     }
   };
-  // handleLogin('pedro3@gmail.com','123abc');
   const handleRegistrar = () => {
     navigation.navigate('Cadastrar Usuario');
   };
