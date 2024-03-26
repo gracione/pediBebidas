@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TouchableOpacity, ScrollView, TextInput } from "react-native";
+import { TouchableOpacity, ScrollView, TextInput, Alert } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FontAwesome5 } from "@expo/vector-icons";
 import styled from "styled-components/native";
@@ -16,13 +16,7 @@ interface NavbarProps {
 }
 
 const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento }) => {
-  const Produtos: { [key: string]: Produto } = {
-    "1": { nome: "Coca-Cola", valor: "12.00" },
-    "2": { nome: "Pepsi", valor: "10.00" },
-  };
-  const [Produtos2, setResponse] = useState<ProdutosInterface[]>([]);
-  console.log(idEstabelecimento);
-  console.log(Produtos2);
+  const [Produtos, setResponse] = useState<ProdutosInterface[]>([]);
 
   const fetchData = async () => {
     try {
@@ -31,10 +25,11 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
     } catch (error) {
       console.error(error);
       Alert.alert(
-        "Erro ao carregar endereço. Por favor, tente novamente mais tarde."
+        "Erro ao carregar produtos. Por favor, tente novamente mais tarde."
       );
     }
   };
+  fetchData();
 
   const [idsProdutos, setIdsProdutos] = useState<{ [key: string]: { quantidade: number } }>({});
 
@@ -63,19 +58,31 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
 
   const [valorTotal, setValorTotal] = useState<string>("0.00");
 
+  const fazerPedido = async ():Promise<any> =>{
+    await api.post('pedido', idsProdutos);
+  }
+  
   return (
     <Container>
       <ScrollView>
         {Object.keys(Produtos).map((key: string) => (
           <TouchableOpacity key={key} >
             <Card>
-              <CardText>{Produtos[key].nome}</CardText>
+              <CardText>
+                <>{Produtos[key].nome}</>  
+                <>{Produtos[key].valor} R$</>
+                </CardText>
               <FontAwesome5 name="cart-plus" size={24} color="black" onPress={() => adicionarProduto(key)} />
             </Card>
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TextInput editable={false} value={`Total: $${valorTotal}`} />
+      <ButtonContainer>
+        <TouchableOpacity onPress={fazerPedido}>
+          <PedidoButton>Fazer Pedido</PedidoButton>
+        </TouchableOpacity>
+        <TextInput editable={false} value={`Total: R$ ${valorTotal}`} />
+      </ButtonContainer>
     </Container>
   );
 };
@@ -96,6 +103,21 @@ const Card = styled.View`
 
 const CardText = styled.Text`
   font-size: 16px;
+  font-weight: bold;
+`;
+
+const ButtonContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+`;
+
+const PedidoButton = styled.Text`
+  background-color: #2ecc71;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
   font-weight: bold;
 `;
 
