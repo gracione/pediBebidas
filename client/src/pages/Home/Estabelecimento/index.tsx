@@ -3,6 +3,8 @@ import { TouchableOpacity, ScrollView, TextInput } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FontAwesome5 } from "@expo/vector-icons";
 import styled from "styled-components/native";
+import api, {fetchProdutosByEstabelecimento} from "../../../service/api";
+import { ProdutosInterface } from "../../../service/types";
 
 interface Produto {
   nome: string;
@@ -13,10 +15,25 @@ interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const Estabelecimento: React.FC<NavbarProps> = ({ navigation }) => {
+const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento }) => {
   const Produtos: { [key: string]: Produto } = {
     "1": { nome: "Coca-Cola", valor: "12.00" },
     "2": { nome: "Pepsi", valor: "10.00" },
+  };
+  const [Produtos2, setResponse] = useState<ProdutosInterface[]>([]);
+  console.log(idEstabelecimento);
+  console.log(Produtos2);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetchProdutosByEstabelecimento(idEstabelecimento);
+      setResponse(response);
+    } catch (error) {
+      console.error(error);
+      Alert.alert(
+        "Erro ao carregar endereço. Por favor, tente novamente mais tarde."
+      );
+    }
   };
 
   const [idsProdutos, setIdsProdutos] = useState<{ [key: string]: { quantidade: number } }>({});

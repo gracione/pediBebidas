@@ -35,7 +35,6 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
       <AuthContext.Consumer>
         {(context) => (
           <NavigationContainer>
-            <Text>=={context.tipoUser}</Text>
             {isLoggedIn ? (
               <Tab.Navigator screenOptions={{ headerShown: false }}>
                 <Tab.Screen

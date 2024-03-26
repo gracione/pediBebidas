@@ -71,8 +71,6 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
 
 
 const Home: React.FC<NavbarProps> = () => {
-  const authContext = React.useContext(AuthContext);
-  console.log("tipo de usuario ss "+authContext.tipoUser);
   return (
     <View style={{ flex: 1 }}>
       <Stack.Navigator>
