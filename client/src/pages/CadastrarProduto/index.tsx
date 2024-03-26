@@ -31,11 +31,15 @@ const CadastrarProduto: React.FC = () => {
     fetchData();
   }, []);
 
-  const handleCadastro = () => {
+  const handleCadastro = async () => {
     if (!nome || !valor || !selectedEstabelecimento) {
       Alert.alert("Por favor, preencha todos os campos.");
       return;
     }
+    const response = await api.post('produto', {
+      nome,valor,selectedEstabelecimento
+    });
+
     console.log("Nome:", nome);
     console.log("Valor:", valor);
     console.log("Estabelecimento selecionado:", selectedEstabelecimento);
