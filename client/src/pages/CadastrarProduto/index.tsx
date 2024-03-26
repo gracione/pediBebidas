@@ -37,7 +37,7 @@ const CadastrarProduto: React.FC = () => {
       return;
     }
     const response = await api.post('produto', {
-      nome,valor,id_estabelecimento:selectedEstabelecimento
+      nome,valor,id_estabelecimento: selectedEstabelecimento
     });
 
     console.log("Nome:", nome);
@@ -63,7 +63,7 @@ const CadastrarProduto: React.FC = () => {
       <SelectList 
         setSelected={(val) => setSelectedEstabelecimento(val as number)}
         data={estabelecimentos.map(estab => ({ key: estab.id, value: estab.nome }))}
-        save="value"
+        save="key"
         style={styles.input}
       />
       <Button
