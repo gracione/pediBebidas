@@ -10,6 +10,9 @@ export default class Produto extends BaseModel {
   declare nome: string
 
   @column()
+  declare valor: number
+
+  @column()
   declare id_estabelecimento: number
 
   @column()
