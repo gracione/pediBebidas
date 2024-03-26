@@ -48,6 +48,7 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
       const quantidade = idsProdutos[idProduto].quantidade;
       const valor = parseFloat(Produtos[idProduto].valor);
       valorProdutos += valor * quantidade;
+      //idPedidoErrado
     });
     return valorProdutos.toFixed(2);
   };
@@ -59,6 +60,7 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
   const [valorTotal, setValorTotal] = useState<string>("0.00");
 
   const fazerPedido = async ():Promise<any> =>{
+    //
     console.log({pedidos:idsProdutos, valor:valorTotal})
     await api.post('pedido', {pedidos:idsProdutos, valor:valorTotal});
   }
