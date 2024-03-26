@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Alert
-} from "react-native";
+import { View, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InputSearch from "../../components/InputSearch";
 import styled from "styled-components/native"; // Import styled-components for React Native
@@ -15,6 +10,7 @@ import { AuthContext } from "../../contexts/auth";
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
   navigation: any;
+  setIdEstabelecimento: any;
 }
 
 interface Estabelecimento {
@@ -22,7 +18,7 @@ interface Estabelecimento {
   nome: string;
 }
 
-const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
+const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstabelecimento }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>([]);
 
@@ -45,7 +41,10 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
-
+  function navegar(idEstabelecimento: number) {
+    setIdEstabelecimento(idEstabelecimento);
+    navigation.navigate("Estabelecimento", { id: idEstabelecimento });
+  }
   return (
     <Container>
       <InputSearch
@@ -57,7 +56,9 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
         {estabelecimentos.map((estabelecimento) => (
           <TouchableOpacity
             key={estabelecimento.id}
-            onPress={() => navigation.navigate("Estabelecimento", { id: estabelecimento.id })}
+            onPress={() => {
+              navegar(estabelecimento.id)
+            }}
           >
             <Card>
               <CardText>{estabelecimento.nome}</CardText>
@@ -69,13 +70,22 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation }) => {
   );
 };
 
+const Home: React.FC = () => {
+  const [idEstabelecimento, setIdEstabelecimento] = useState<number>(0);
 
-const Home: React.FC<NavbarProps> = () => {
   return (
     <View style={{ flex: 1 }}>
       <Stack.Navigator>
-        <Stack.Screen name="Menu" component={Estabelecimentos} />
-        <Stack.Screen name="Estabelecimento" component={Estabelecimento} />
+        <Stack.Screen name="Menu">
+          {(props) => (
+            <Estabelecimentos {...props} setIdEstabelecimento={setIdEstabelecimento} />
+            )}
+        </Stack.Screen>
+        <Stack.Screen name="Estabelecimento">
+          {(props) => (
+            <Estabelecimento {...props} idEstabelecimento={idEstabelecimento} />
+          )}
+        </Stack.Screen>
       </Stack.Navigator>
     </View>
   );
