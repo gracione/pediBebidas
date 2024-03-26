@@ -18,4 +18,8 @@ export default class Produto extends BaseModel {
   @column()
   declare id_imagem: number
 
+  public static async getProdutosByIdEstabelecimento(idEstabelecimento: number) {
+    const data = await Produto.query().where('id_estabelecimento', idEstabelecimento)
+    return data
+  }
 }

@@ -22,6 +22,7 @@ router
   router.get('/estabelecimento-por-usuario', [EstabelecimentoController, 'show'])
   router.get('/estabelecimento', [EstabelecimentoController, 'index'])
   router.resource('produto', ProdutoController).apiOnly()
+  router.get('/produto/estabelecimento/:id_estabelecimento', [ProdutoController, 'getProdutosByIdEstabelecimentoAction'])
 })
   .use(middleware.auth({ guards: ['api'] }))
 
