@@ -8,6 +8,7 @@ export default class PedidosProdutosSchema extends BaseSchema {
       table.increments('id').primary()
       table.integer('id_produto').unsigned().references('id').inTable('produto')
       table.integer('id_pedido').unsigned().references('id').inTable('pedido')
+      table.integer('quantidade')
       table.timestamps(true, true)
     })
   }

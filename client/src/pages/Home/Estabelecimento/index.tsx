@@ -59,7 +59,8 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
   const [valorTotal, setValorTotal] = useState<string>("0.00");
 
   const fazerPedido = async ():Promise<any> =>{
-    await api.post('pedido', idsProdutos);
+    console.log({pedidos:idsProdutos, valor:valorTotal})
+    await api.post('pedido', {pedidos:idsProdutos, valor:valorTotal});
   }
   
   return (
