@@ -19,10 +19,10 @@ export default class PedidoController extends BaseController {
     const data = request.all()
     const keys = Object.keys(data.pedidos)
     let value:any= {};
-    keys.forEach((idProduto) => {
-      value = data.pedidos[idProduto]
+    keys.forEach((idProdutoProduto) => {
+      value = data.pedidos[idProdutoProduto]
       let produtoPedido:any = {
-        id_produto: idProduto,
+        id_produto: idProdutoProduto,
         quantidade: value.quantidade,
         id_pedido: idPedido,
       }
