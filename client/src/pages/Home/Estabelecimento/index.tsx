@@ -18,6 +18,17 @@ interface NavbarProps {
 const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento }) => {
   const [Produtos, setResponse] = useState<ProdutosInterface[]>([]);
 
+
+  interface Item {
+      id: number;
+      idEstabelecimento: number;
+      idImagem: number | null;
+      nome: string;
+      valor: string;
+  }
+
+
+
   const fetchData = async () => {
     try {
       const response = await fetchProdutosByEstabelecimento(idEstabelecimento);
@@ -31,9 +42,11 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
   };
   fetchData();
 
-  const [idsProdutos, setIdsProdutos] = useState<{ [key: string]: { quantidade: number } }>({});
+  const [idsProdutos, setIdsProdutos] = useState<{ [key: number]: { quantidade: number } }>({});
 
-  const adicionarProduto = (idProduto: string) => {
+  const adicionarProduto = (idProduto: number) => {
+    // console.log(typeof idProduto);
+
     setIdsProdutos((prevIdsProdutos) => ({
       ...prevIdsProdutos,
       [idProduto]: {
@@ -44,15 +57,25 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
 
   const calcularValorTotal = () => {
     let valorProdutos = 0;
+    let vetor: {[key: string]: Item} = {};
+  
+    Produtos.map(item => {
+      vetor[item.id] = item;
+    });
+  
     Object.keys(idsProdutos).forEach((idProduto) => {
       const quantidade = idsProdutos[idProduto].quantidade;
-      const valor = parseFloat(Produtos[idProduto].valor);
-      valorProdutos += valor * quantidade;
-      //idPedidoErrado
+      if (vetor[idProduto]) {
+        const valor = parseFloat(vetor[idProduto].valor);
+        valorProdutos += valor * quantidade;
+      } else {
+        console.error(`Produto com id ${idProduto} não encontrado.`);
+      }
     });
+  
     return valorProdutos.toFixed(2);
   };
-
+  
   useEffect(() => {
     setValorTotal(calcularValorTotal());
   }, [idsProdutos]);
@@ -60,14 +83,13 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
   const [valorTotal, setValorTotal] = useState<string>("0.00");
 
   const fazerPedido = async ():Promise<any> =>{
-    //
-    console.log({pedidos:idsProdutos, valor:valorTotal})
     await api.post('pedido', {pedidos:idsProdutos, valor:valorTotal});
   }
   
   return (
     <Container>
       <ScrollView>
+
         {Object.keys(Produtos).map((key: string) => (
           <TouchableOpacity key={key} >
             <Card>
@@ -75,7 +97,7 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
                 <>{Produtos[key].nome}</>  
                 <>{Produtos[key].valor} R$</>
                 </CardText>
-              <FontAwesome5 name="cart-plus" size={24} color="black" onPress={() => adicionarProduto(key)} />
+              <FontAwesome5 name="cart-plus" size={24} color="black" onPress={() => adicionarProduto(Produtos[key].id)} />
             </Card>
           </TouchableOpacity>
         ))}
