@@ -18,17 +18,6 @@ interface NavbarProps {
 const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento }) => {
   const [Produtos, setResponse] = useState<ProdutosInterface[]>([]);
 
-
-  interface Item {
-      id: number;
-      idEstabelecimento: number;
-      idImagem: number | null;
-      nome: string;
-      valor: string;
-  }
-
-
-
   const fetchData = async () => {
     try {
       const response = await fetchProdutosByEstabelecimento(idEstabelecimento);
@@ -45,8 +34,6 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
   const [idsProdutos, setIdsProdutos] = useState<{ [key: number]: { quantidade: number } }>({});
 
   const adicionarProduto = (idProduto: number) => {
-    // console.log(typeof idProduto);
-
     setIdsProdutos((prevIdsProdutos) => ({
       ...prevIdsProdutos,
       [idProduto]: {
