@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InputSearch from "../../components/InputSearch";
 import styled from "styled-components/native"; // Import styled-components for React Native
 import api from "../../service/api";
-import Estabelecimento from "./Estabelecimento";
+import {FazerPedido} from "./FazerPedido";
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
@@ -42,7 +42,7 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstabelecime
   };
   function navegar(idEstabelecimento: number) {
     setIdEstabelecimento(idEstabelecimento);
-    navigation.navigate("Estabelecimento", { id: idEstabelecimento });
+    navigation.navigate("FazerPedido", { id: idEstabelecimento });
   }
   return (
     <Container>
@@ -80,9 +80,9 @@ const Home: React.FC = () => {
             <Estabelecimentos {...props} setIdEstabelecimento={setIdEstabelecimento} />
             )}
         </Stack.Screen>
-        <Stack.Screen name="Estabelecimento">
+        <Stack.Screen name="FazerPedido">
           {(props) => (
-            <Estabelecimento {...props} idEstabelecimento={idEstabelecimento} />
+            <FazerPedido {...props} idEstabelecimento={idEstabelecimento} />
           )}
         </Stack.Screen>
       </Stack.Navigator>

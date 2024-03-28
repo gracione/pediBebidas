@@ -15,7 +15,7 @@ interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento }) => {
+export const FazerPedido: React.FC<NavbarProps> = ({ navigation, idEstabelecimento }) => {
   const [Produtos, setResponse] = useState<ProdutosInterface[]>([]);
 
   const fetchData = async () => {
@@ -130,4 +130,3 @@ const PedidoButton = styled.Text`
   font-weight: bold;
 `;
 
-export default Estabelecimento;
