@@ -3,7 +3,7 @@ import { TouchableOpacity, ScrollView, TextInput, Alert } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FontAwesome5 } from "@expo/vector-icons";
 import styled from "styled-components/native";
-import api, {fetchProdutosByEstabelecimento} from "../../../service/api";
+import api, { fetchProdutosByEstabelecimento } from "../../../service/api";
 import { ProdutosInterface } from "../../../service/types";
 
 interface Produto {
@@ -44,12 +44,12 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
 
   const calcularValorTotal = () => {
     let valorProdutos = 0;
-    let vetor: {[key: string]: Item} = {};
-  
+    let vetor: { [key: string]: Item } = {};
+
     Produtos.map(item => {
       vetor[item.id] = item;
     });
-  
+
     Object.keys(idsProdutos).forEach((idProduto) => {
       const quantidade = idsProdutos[idProduto].quantidade;
       if (vetor[idProduto]) {
@@ -59,32 +59,29 @@ const Estabelecimento: React.FC<NavbarProps> = ({ navigation, idEstabelecimento 
         console.error(`Produto com id ${idProduto} não encontrado.`);
       }
     });
-  
+
     return valorProdutos.toFixed(2);
   };
-  
+
   useEffect(() => {
     setValorTotal(calcularValorTotal());
   }, [idsProdutos]);
 
   const [valorTotal, setValorTotal] = useState<string>("0.00");
 
-  const fazerPedido = async ():Promise<any> =>{
-    await api.post('pedido', {pedidos:idsProdutos, valor:valorTotal});
+  const fazerPedido = async (): Promise<any> => {
+    await api.post('pedido', { pedidos: idsProdutos, valor: valorTotal });
   }
-  
+
   return (
     <Container>
       <ScrollView>
-
-        {Object.keys(Produtos).map((key: string) => (
-          <TouchableOpacity key={key} >
+        {Produtos.map((produto, index) => (
+          <TouchableOpacity key={index} onPress={() => adicionarProduto(produto.id)}>
             <Card>
-              <CardText>
-                <>{Produtos[key].nome}</>  
-                <>{Produtos[key].valor} R$</>
-                </CardText>
-              <FontAwesome5 name="cart-plus" size={24} color="black" onPress={() => adicionarProduto(Produtos[key].id)} />
+              <CardText>{produto.nome}</CardText>
+              <CardText>{produto.valor} R$</CardText>
+              <FontAwesome5 name="cart-plus" size={24} color="black" />
             </Card>
           </TouchableOpacity>
         ))}
