@@ -1,62 +1,77 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Alert } from "react-native";
+import { ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import api from "../../service/api";
+import PedidoCard from "./../../components/PedidoCard";
+
+interface Pedido {
+  id: string;
+  tpSituacao: string;
+  valor: number;
+}
 
 const Pedidos: React.FC = () => {
-  const [pedidos, setPedidos] = useState([]);
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get("pedido/usuario");
         setPedidos(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
-        Alert.alert(
-          "Erro ao carregar pedidos. Por favor, tente novamente mais tarde."
-        );
+        setError("Erro ao carregar pedidos. Por favor, tente novamente mais tarde.");
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  console.log(pedidos);
+  if (isLoading) {
+    return (
+      <LoadingContainer>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </LoadingContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorContainer>
+        <ErrorText>{error}</ErrorText>
+      </ErrorContainer>
+    );
+  }
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        {pedidos.map((pedido, index) => (
-          <Card key={index}>
-            <Title>{pedido.tpSituacao}</Title>
-            <Value>{pedido.valor}</Value>
-          </Card>
-        ))}
-      </View>
-    </View>
+    <Container>
+      {pedidos.map((pedido) => (
+        <PedidoCard key={pedido.id} pedido={pedido} />
+      ))}
+    </Container>
   );
 };
 
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LoadingContainer = styled(Container)`
+  /*css para padronizar*/
+`;
+
+const ErrorContainer = styled(Container)`
+  /*css para padronizar*/
+`;
+
+const ErrorText = styled.Text`
+  /*css para padronizar*/
+`;
+
 export default Pedidos;
-
-const Card = styled.View`
-  background-color: #fff;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  width: 90%;
-  elevation: 3; /* Sombra para Android */
-  shadow-color: #000; /* Sombra para iOS */
-  shadow-opacity: 0.2; /* Sombra para iOS */
-  shadow-radius: 3px; /* Sombra para iOS */
-`;
-
-const Title = styled.Text`
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const Value = styled.Text`
-  font-size: 16px;
-`;
