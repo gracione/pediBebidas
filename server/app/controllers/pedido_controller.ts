@@ -8,15 +8,15 @@ export default class PedidoController extends BaseController {
     super(Pedido)
   }
 
-  async store({ request, response }: HttpContext) {
-    let dataPedido:any = [];
-    //temporario
-    dataPedido['tp_situacao'] = 'N'
-    dataPedido['id_usuario'] = 31
-    dataPedido['id_endereco'] = 15
-
-    const { id: idPedido } = await Pedido.create(dataPedido)
+  async store({ auth, request, response }: HttpContext) {
     const data = request.all()
+    let dataPedido:any = {
+      tp_situacao : 'p',
+      id_usuario : auth.user?.id,
+      id_endereco : auth.user?.id_endereco,
+      valor: data.valor
+    };
+    const { id: idPedido } = await Pedido.create(dataPedido)
     const keys = Object.keys(data.pedidos)
     let value:any= {};
     keys.forEach((idProdutoProduto) => {
