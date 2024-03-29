@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, TextInput, Button, Alert, Text } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-import { Estabelecimento } from "./types";
+import { EstabelecimentoComEndereco } from "./types";
 import { fetchEstabelecimentos, saveEstabelecimento } from "./api";
 
 const MeusEstabelecimentos: React.FC = () => {
@@ -15,7 +15,7 @@ const MeusEstabelecimentos: React.FC = () => {
     latitude: "",
     longitude: "",
   });
-  const [response, setResponse] = useState<Estabelecimento[]>([]);
+  const [response, setResponse] = useState<EstabelecimentoComEndereco[]>([]);
   const [addEndereco, setAddEndereco] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const MeusEstabelecimentos: React.FC = () => {
     }
   };
 
-  const handleChange = (field: keyof Estabelecimento, value: string) => {
+  const handleChange = (field: keyof EstabelecimentoComEndereco, value: string) => {
     setEstabelecimento({ ...estabelecimento, [field]: value });
   };
 

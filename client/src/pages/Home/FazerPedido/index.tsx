@@ -6,11 +6,6 @@ import styled from "styled-components/native";
 import api, { fetchProdutosByEstabelecimento } from "../../../service/api";
 import { ProdutosInterface } from "../../../service/types";
 
-interface Produto {
-  nome: string;
-  valor: string;
-}
-
 interface NavbarProps {
   navigation: NativeStackNavigationProp<any>;
 }

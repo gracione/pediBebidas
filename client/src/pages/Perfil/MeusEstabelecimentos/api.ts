@@ -1,7 +1,7 @@
 import api from "../../../service/api";
-import { Estabelecimento } from "./types";
+import { EstabelecimentoComEndereco } from "./types";
 
-export const fetchEstabelecimentos = async (): Promise<Estabelecimento[]> => {
+export const fetchEstabelecimentos = async (): Promise<EstabelecimentoComEndereco[]> => {
   try {
     const response = await api.get("estabelecimento-por-usuario");
     return response.data;
@@ -10,7 +10,7 @@ export const fetchEstabelecimentos = async (): Promise<Estabelecimento[]> => {
   }
 };
 
-export const saveEstabelecimento = async (estabelecimento: Estabelecimento): Promise<void> => {
+export const saveEstabelecimento = async (estabelecimento: EstabelecimentoComEndereco): Promise<void> => {
   try {
     await api.post("estabelecimento", estabelecimento);
   } catch (error) {

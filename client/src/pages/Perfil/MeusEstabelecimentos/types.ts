@@ -1,4 +1,4 @@
-export interface Estabelecimento {
+export interface EstabelecimentoComEndereco {
     nome: string;
     rua: string;
     numero: string;
