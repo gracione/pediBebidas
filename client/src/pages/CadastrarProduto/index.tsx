@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
-import { SelectList } from 'react-native-dropdown-select-list';
-import { Input, Button } from 'react-native-elements';
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Alert } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
+import { Input, Button } from "react-native-elements";
 import api from "../../service/api";
 
 interface Estabelecimento {
@@ -10,10 +10,14 @@ interface Estabelecimento {
 }
 
 const CadastrarProduto: React.FC = () => {
-  const [nome, setNome] = useState('');
-  const [valor, setValor] = useState('');
-  const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>([]);
-  const [selectedEstabelecimento, setSelectedEstabelecimento] = useState<number | null>(null);
+  const [nome, setNome] = useState("");
+  const [valor, setValor] = useState("");
+  const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>(
+    []
+  );
+  const [selectedEstabelecimento, setSelectedEstabelecimento] = useState<
+    number | null
+  >(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,13 +40,16 @@ const CadastrarProduto: React.FC = () => {
       Alert.alert("Por favor, preencha todos os campos.");
       return;
     }
-    const response = await api.post('produto', {
-      nome,valor,id_estabelecimento: selectedEstabelecimento
+    const response = await api.post("produto", {
+      nome,
+      valor,
+      id_estabelecimento: selectedEstabelecimento,
     });
+    Alert.alert("Sucesso", "Produto cadastrado com sucesso!");
 
-    console.log("Nome:", nome);
-    console.log("Valor:", valor);
-    console.log("Estabelecimento selecionado:", selectedEstabelecimento);
+    setNome("");
+    setValor("");
+    setSelectedEstabelecimento(null);
   };
 
   return (
@@ -52,17 +59,20 @@ const CadastrarProduto: React.FC = () => {
         placeholder="Nome"
         value={nome}
         onChangeText={(text) => setNome(text)}
-        style={styles.input}
+        inputContainerStyle={styles.input}
       />
       <Input
         placeholder="Valor"
         value={valor}
         onChangeText={(text) => setValor(text)}
-        style={styles.input}
+        inputContainerStyle={styles.input}
       />
-      <SelectList 
+      <SelectList
         setSelected={(val) => setSelectedEstabelecimento(val as number)}
-        data={estabelecimentos.map(estab => ({ key: estab.id, value: estab.nome }))}
+        data={estabelecimentos.map((estab) => ({
+          key: estab.id,
+          value: estab.nome,
+        }))}
         save="key"
         style={styles.input}
       />
@@ -78,21 +88,22 @@ const CadastrarProduto: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   input: {
     marginBottom: 10,
+    width: "100%",
   },
   button: {
     marginTop: 20,
-    width: '100%',
+    width: "100%",
   },
 });
 
