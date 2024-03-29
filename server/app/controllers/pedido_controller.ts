@@ -31,4 +31,14 @@ export default class PedidoController extends BaseController {
     
     return response.created(idPedido)
   }
+  async getUserOrders({ auth, params, response }: HttpContext) {
+    const data = await Pedido.getUserOrdersByIdUser(auth.user?.id);
+
+    if (!data) {
+      return response.notFound({ message: `${this.Model.name} not found` })
+    }
+
+    return response.ok(data)
+  }
+  
 }

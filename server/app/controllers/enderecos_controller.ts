@@ -1,6 +1,6 @@
 import { HttpContext } from '@adonisjs/core/http'
 import Endereco from '#models/endereco'
-import BaseController from './bases_controller.js'
+import BaseController from './bases_controllerOld.js'
 
 export default class EnderecosController extends BaseController {
   constructor() {

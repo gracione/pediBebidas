@@ -18,4 +18,8 @@ export default class Pedido extends BaseModel {
   @column()
   public valor: number
 
+  public static async getUserOrdersByIdUser(idUsuario: number) {
+    const data = await Pedido.query().where('id_usuario', idUsuario)
+    return data;
+  }
 }

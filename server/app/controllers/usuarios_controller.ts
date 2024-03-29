@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Usuario from '#models/usuario'
 import Endereco from '#models/endereco'
-import BaseController from './bases_controller.js'
+import BaseController from './bases_controllerOld.js'
 import hash from '@adonisjs/core/services/hash'
 import UserTypes from '../Enums/UserTypes.js'
 
