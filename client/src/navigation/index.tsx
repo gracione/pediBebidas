@@ -20,7 +20,6 @@ interface NavigationProps {}
 
 export const Navigation: React.FC<NavigationProps> = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const authContext = useContext(AuthContext);
 
   const sairDoPerfil = () => {
     removeToken();
@@ -29,47 +28,51 @@ export const Navigation: React.FC<NavigationProps> = () => {
 
   return (
     <AuthProvider>
-      <NavigationContainer>
-        {isLoggedIn ? (
-          <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen
-              name="Home"
-              component={Home}
-              options={tabScreenOptions("Home", SimpleLineIcons, "home")}
-            />
-            <Tab.Screen
-              name="Pedidos"
-              component={Pedidos}
-              options={tabScreenOptions("Pedidos", Entypo, "drink")}
-            />
-            {authContext.tipoUser === ADM && (
-              <Tab.Screen
-                name="Cadastrar Produto"
-                component={CadastrarProduto}
-                options={tabScreenOptions("Cadastrar Produto", Octicons, "plus-circle")}
-              />
+      <AuthContext.Consumer>
+        {(context) => (
+          <NavigationContainer>
+            {isLoggedIn ? (
+              <Tab.Navigator screenOptions={{ headerShown: false }}>
+                <Tab.Screen
+                  name="Home"
+                  component={Home}
+                  options={tabScreenOptions("Home", SimpleLineIcons, "home")}
+                />
+                <Tab.Screen
+                  name="Pedidos"
+                  component={Pedidos}
+                  options={tabScreenOptions("Pedidos", Entypo, "drink")}
+                />
+                {context.tipoUser == ADM && (
+                  <Tab.Screen
+                    name="Cadastrar Produto"
+                    component={CadastrarProduto}
+                    options={tabScreenOptions("Cadastrar Produto", Octicons, "plus-circle")}
+                  />
+                )}
+                <Tab.Screen
+                  name="Perfil"
+                  options={tabScreenOptions("Perfil", AntDesign, "profile")}
+                >
+                  {() => <Perfil sairDoPerfil={sairDoPerfil} />}
+                </Tab.Screen>
+              </Tab.Navigator>
+            ) : (
+              <Stack.Navigator>
+                <Stack.Screen name="Login">
+                  {(props) => (
+                    <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />
+                  )}
+                </Stack.Screen>
+                <Stack.Screen
+                  name="Cadastrar Usuario"
+                  component={RegisterScreen}
+                />
+              </Stack.Navigator>
             )}
-            <Tab.Screen
-              name="Perfil"
-              options={tabScreenOptions("Perfil", AntDesign, "profile")}
-            >
-              {() => <Perfil sairDoPerfil={sairDoPerfil} />}
-            </Tab.Screen>
-          </Tab.Navigator>
-        ) : (
-          <Stack.Navigator>
-            <Stack.Screen name="Login">
-              {(props) => (
-                <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />
-              )}
-            </Stack.Screen>
-            <Stack.Screen
-              name="Cadastrar Usuario"
-              component={RegisterScreen}
-            />
-          </Stack.Navigator>
+          </NavigationContainer>
         )}
-      </NavigationContainer>
+      </AuthContext.Consumer>
     </AuthProvider>
   );
 };

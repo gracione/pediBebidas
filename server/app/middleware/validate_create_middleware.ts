@@ -6,10 +6,16 @@ export default class ValidateCreateMiddleware {
     /**
      * Middleware logic goes here (before the next call)
      */
+        
     const caminho = `#validators${ctx.route?.pattern}`
     const { ValidateCreate } = await import(caminho)
 
     const data = ctx.request.all()
+
+    // const caminhoPrepare = `#models${ctx.route?.pattern}`
+    // const prepareModule = await import(caminhoPrepare)
+    // prepareModule.default.prepare(data)
+
     await ValidateCreate.validate(data);
     /**
      * Call next method in the pipeline and return its output
