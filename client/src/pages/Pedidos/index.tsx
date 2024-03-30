@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
-import styled from "styled-components/native";
 import api from "../../service/api";
 import PedidoCard from "./../../components/PedidoCard";
+import { Container, LoadingContainer, ErrorContainer, ErrorText } from "./styles";
 
 interface Pedido {
   id: string;
@@ -55,23 +55,5 @@ const Pedidos: React.FC = () => {
     </Container>
   );
 };
-
-const Container = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LoadingContainer = styled(Container)`
-  /*css para padronizar*/
-`;
-
-const ErrorContainer = styled(Container)`
-  /*css para padronizar*/
-`;
-
-const ErrorText = styled.Text`
-  /*css para padronizar*/
-`;
 
 export default Pedidos;

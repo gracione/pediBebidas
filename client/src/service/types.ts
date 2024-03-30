@@ -1,3 +1,5 @@
+export const ADM: string = '1';
+
 export interface Estabelecimento {
     nome: string;
     rua: string;

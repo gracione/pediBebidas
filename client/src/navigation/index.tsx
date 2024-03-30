@@ -7,13 +7,14 @@ import Home from "../pages/Home";
 import RegisterScreen from "../screens/RegisterScreen";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { removeToken } from "../service/api";
+import { ADM } from "../service/types";
 import Pedidos from "../pages/Pedidos";
 import CadastrarProduto from "../pages/CadastrarProduto";
 import Perfil from "../pages/Perfil";
 import { SimpleLineIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import { AuthProvider, AuthContext } from "../contexts/auth";
-import { Text } from "react-native-elements";
 import { Octicons } from '@expo/vector-icons';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,6 @@ interface NavigationProps {
 }
 
 export const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
-  const ADM:any = 1;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const sairDoPerfil = () => {
