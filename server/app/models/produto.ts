@@ -18,8 +18,8 @@ export default class Produto extends BaseModel {
   @column()
   declare id_imagem: number
 
-  public static async prepare(data: []) {
-    return data;    
+  public static prepare(data: {}) {
+    return data; 
   }
 
   public static async getProdutosByIdEstabelecimento(idEstabelecimento: number) {

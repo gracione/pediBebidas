@@ -3,23 +3,21 @@ import type { NextFn } from '@adonisjs/core/types/http'
 
 export default class ValidateCreateMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
-    /**
-     * Middleware logic goes here (before the next call)
-     */
-        
-    const caminho = `#validators${ctx.route?.pattern}`
-    const { ValidateCreate } = await import(caminho)
+    const caminhoValidador = `#validators${ctx.route?.pattern}`
+    const { ValidateCreate } = await import(caminhoValidador)
 
     const data = ctx.request.all()
 
-    // const caminhoPrepare = `#models${ctx.route?.pattern}`
-    // const prepareModule = await import(caminhoPrepare)
-    // prepareModule.default.prepare(data)
+    const caminhoPreparador = `#models${ctx.route?.pattern}`
+    const prepareModule = await import(caminhoPreparador)
 
-    await ValidateCreate.validate(data);
-    /**
-     * Call next method in the pipeline and return its output
-     */
+    let dadosPreparados = data;
+    if (prepareModule.default && typeof prepareModule.default.prepare === 'function') {
+      dadosPreparados = prepareModule.default.prepare(data)
+    }
+
+    await ValidateCreate.validate(dadosPreparados);
+
     const output = await next()
     return output
   }
