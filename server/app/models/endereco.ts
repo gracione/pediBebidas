@@ -1,6 +1,7 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import ModelInterface from '#contracts/ModelInterface';
 
-export default class Endereco extends BaseModel {
+export default class Endereco extends BaseModel implements ModelInterface {
   public static table = 'endereco'
 
   @column({ isPrimary: true })
@@ -23,4 +24,8 @@ export default class Endereco extends BaseModel {
 
   @column()
   declare longitude: number
+
+  public prepare(data: []): [] {
+      return data;
+  }
 }

@@ -12,9 +12,11 @@ export default class ValidateCreateMiddleware {
     const prepareModule = await import(caminhoPreparador)
 
     let dadosPreparados = data;
-    if (prepareModule.default && typeof prepareModule.default.prepare === 'function') {
-      dadosPreparados = prepareModule.default.prepare(data)
+    const preparador = new prepareModule.default();
+    if (prepareModule.default && typeof preparador.prepare === 'function') {
+      dadosPreparados = preparador.prepare(data);
     }
+    
 
     await ValidateCreate.validate(dadosPreparados);
 
