@@ -3,7 +3,6 @@ import { View, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InputSearch from "../../../components/InputSearch";
 import api from "../../../service/api";
-import { FazerPedido } from ".././FazerPedido";
 import { Container, CardEstabelecimento, CardContent, CardText, CardImage, CardAberto, CardFechado, CardDistancia } from "./style";
 
 const Stack = createNativeStackNavigator();
