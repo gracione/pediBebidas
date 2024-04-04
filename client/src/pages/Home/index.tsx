@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InputSearch from "../../components/InputSearch";
-import styled from "styled-components/native"; // Import styled-components for React Native
+import styled from "styled-components/native";
 import api from "../../service/api";
-import {FazerPedido} from "./FazerPedido";
+import { FazerPedido } from "./FazerPedido";
 
 const Stack = createNativeStackNavigator();
 interface NavbarProps {
@@ -17,9 +17,14 @@ interface Estabelecimento {
   nome: string;
 }
 
-const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstabelecimento }) => {
+const Estabelecimentos: React.FC<NavbarProps> = ({
+  navigation,
+  setIdEstabelecimento,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>([]);
+  const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,12 +61,17 @@ const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstabelecime
           <TouchableOpacity
             key={estabelecimento.id}
             onPress={() => {
-              navegar(estabelecimento.id)
+              navegar(estabelecimento.id);
             }}
           >
-            <Card>
-              <CardText>{estabelecimento.nome}</CardText>
-            </Card>
+            <CardEstabelecimento>
+              <CardImage url={estabelecimento.url ?? ""} />
+              <CardContent>
+                <CardText>{estabelecimento.nome}</CardText>
+                <CardDistancia>7 km</CardDistancia>
+                <CardAberto>Aberto</CardAberto>
+              </CardContent>
+            </CardEstabelecimento>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -77,8 +87,11 @@ const Home: React.FC = () => {
       <Stack.Navigator>
         <Stack.Screen name="Menu">
           {(props) => (
-            <Estabelecimentos {...props} setIdEstabelecimento={setIdEstabelecimento} />
-            )}
+            <Estabelecimentos
+              {...props}
+              setIdEstabelecimento={setIdEstabelecimento}
+            />
+          )}
         </Stack.Screen>
         <Stack.Screen name="FazerPedido">
           {(props) => (
@@ -94,16 +107,48 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Card = styled.View`
-  background-color: #c5c5c5;
-  border-radius: 8px;
-  margin: 4px 30px;
-  padding: 15px 30px;
+const CardEstabelecimento = styled.View`
+  background-color: #c1bee4;
+  display: flex;
+  margin: 1% 6%;
+  padding: 1%;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const CardContent = styled.View`
+  margin: 10px;
+  width: 80%;
 `;
 
 const CardText = styled.Text`
+  color: #6b0e0e;
   font-size: 16px;
   font-weight: bold;
+  text-align: left;
+  text-transform: capitalize;
+`;
+
+const CardImage = styled.Image`
+  font-size: 16px;
+  font-weight: bold;
+  border: saddlebrown;
+  width: 20%;
+  height: 100%;
+  border-radius: 45px;
+`;
+
+const CardAberto = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+`;
+const CardFechado = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const CardDistancia = styled.Text`
+  /* Adicionar estilos conforme necessário */
 `;
 
 export default Home;

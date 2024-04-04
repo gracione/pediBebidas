@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, Button, Alert, Text } from "react-native";
-import styled from "styled-components/native";
+import { Button, Alert, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { EstabelecimentoComEndereco } from "./types";
 import { fetchEstabelecimentos, saveEstabelecimento } from "./api";
+import { Container, FormContainer, StyledTextInput, Card } from "./style";
 
 const MeusEstabelecimentos: React.FC = () => {
-  const [estabelecimento, setEstabelecimento] = useState<Estabelecimento>({
+  const [estabelecimento, setEstabelecimento] = useState<EstabelecimentoComEndereco>({
     nome: "",
     rua: "",
     numero: "",
@@ -129,38 +129,5 @@ const MeusEstabelecimentos: React.FC = () => {
     </Container>
   );
 };
-
-const Container = styled(View)`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-`;
-
-const FormContainer = styled(View)`
-  width: 100%;
-`;
-
-const StyledTextInput = styled(TextInput)`
-  border: solid;
-  width: 100%;
-  height: 40px;
-  padding: 10px;
-  margin: 5px 20px;
-  border-width: 1px;
-  border-color: #ccc;
-  border-radius: 5px;
-`;
-
-const Card = styled.View`
-  background-color: #9b9c9b;
-  border-radius: 8px;
-  width: 90%;
-  padding: 15px 20px;
-  margin: 3px 5px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
 
 export default MeusEstabelecimentos;
