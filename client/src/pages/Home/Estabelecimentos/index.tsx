@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, ScrollView, Alert } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InputSearch from "../../../components/InputSearch";
 import api from "../../../service/api";
 import { Container, CardEstabelecimento, CardContent, CardText, CardImage, CardAberto, CardFechado, CardDistancia } from "./style";
+import * as Location from 'expo-location';
 
-const Stack = createNativeStackNavigator();
 interface NavbarProps {
   navigation: any;
   setIdEstabelecimento: any;
@@ -21,10 +20,10 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({
     setIdEstabelecimento,
   }) => {
     const [searchQuery, setSearchQuery] = useState("");
-    const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>(
-      []
-    );
-  
+    const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>([]);
+    const [location, setLocation] = useState<Location.LocationObject | null>(null);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -37,7 +36,24 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({
           );
         }
       };
+
+      const getLocation = async () => {
+        try {
+          const { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== 'granted') {
+            setErrorMsg('Permissão para acessar a localização foi negada.');
+            return; // Retornar para evitar a execução do código abaixo em caso de permissão negada
+          }
+        
+          const location = await Location.getCurrentPositionAsync({});
+          setLocation(location);
+        } catch (error) {
+          setErrorMsg('Erro ao obter a localização: ' + (error as Error).message);
+        }
+      };  
   
+      console.log(location);
+      getLocation();
       fetchData();
     }, []);
   
