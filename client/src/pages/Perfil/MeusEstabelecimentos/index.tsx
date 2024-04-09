@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Button, Alert, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { EstabelecimentoComEndereco } from "./types";
 import { fetchEstabelecimentos, saveEstabelecimento } from "./api";
 import { Container, FormContainer, StyledTextInput, Card } from "./style";
+import MapView, { Marker, Region } from "react-native-maps";
+import styled from "styled-components/native";
+
+interface Location {
+  latitude: number;
+  longitude: number;
+}
+
 
 const MeusEstabelecimentos: React.FC = () => {
-  const [estabelecimento, setEstabelecimento] = useState<EstabelecimentoComEndereco>({
-    nome: "",
-    rua: "",
-    numero: "",
-    bairro: "",
-    complementar: "",
-    latitude: "",
-    longitude: "",
-  });
+    const [estabelecimento, setEstabelecimento] = useState<EstabelecimentoComEndereco>({
+      nome: "",
+      rua: "",
+      numero: "",
+      bairro: "",
+      complementar: "",
+      latitude: "",
+      longitude: "",
+    });
+    
   const [response, setResponse] = useState<EstabelecimentoComEndereco[]>([]);
   const [addEndereco, setAddEndereco] = useState(false);
 
@@ -73,6 +83,17 @@ const MeusEstabelecimentos: React.FC = () => {
     }
   };
 
+  const handleMapPress = (event: {
+    nativeEvent: { coordinate: { latitude: number; longitude: number } };
+  }) => {
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    setEstabelecimento(prevEstabelecimento => ({
+      ...prevEstabelecimento,
+      latitude: latitude.toString(),
+      longitude: longitude.toString()
+    }));
+  };
+  
   return (
     <Container>
       {addEndereco ? (
@@ -98,16 +119,19 @@ const MeusEstabelecimentos: React.FC = () => {
             onChangeText={(text) => handleChange("complementar", text)}
             placeholder="Complemento"
           />
-          <StyledTextInput
-            onChangeText={(text) => handleChange("latitude", text)}
-            placeholder="Latitude"
-            keyboardType="numeric"
-          />
-          <StyledTextInput
-            onChangeText={(text) => handleChange("longitude", text)}
-            placeholder="Longitude"
-            keyboardType="numeric"
-          />
+          <Text>Escolha a localização</Text>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: -17.3920936,
+              longitude: -50.373832,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
+            onPress={handleMapPress}
+          >
+          </MapView>
+
           <Button title="Salvar" onPress={handleSave} />
         </FormContainer>
       ) : (
@@ -129,5 +153,15 @@ const MeusEstabelecimentos: React.FC = () => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  map: {
+    width: "100%",
+    height: "30%",
+  },
+});
 
 export default MeusEstabelecimentos;

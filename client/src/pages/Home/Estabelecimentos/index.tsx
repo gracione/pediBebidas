@@ -42,10 +42,11 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({
           const { status } = await Location.requestForegroundPermissionsAsync();
           if (status !== 'granted') {
             setErrorMsg('Permissão para acessar a localização foi negada.');
-            return; // Retornar para evitar a execução do código abaixo em caso de permissão negada
+            return;
           }
         
           const location = await Location.getCurrentPositionAsync({});
+          console.log(location);
           setLocation(location);
         } catch (error) {
           setErrorMsg('Erro ao obter a localização: ' + (error as Error).message);
