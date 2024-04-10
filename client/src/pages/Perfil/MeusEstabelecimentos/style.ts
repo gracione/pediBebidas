@@ -34,3 +34,10 @@ export const Card = styled.View`
   justify-content: space-between;
 `;
 
+export const MapContainer = styled.View`
+  flex: 1;
+  width: 90%;
+  height: 300px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;

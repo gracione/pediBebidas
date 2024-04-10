@@ -6,7 +6,6 @@ import { EstabelecimentoComEndereco } from "./types";
 import { fetchEstabelecimentos, saveEstabelecimento } from "./api";
 import { Container, FormContainer, StyledTextInput, Card } from "./style";
 import MapView, { Marker, Region } from "react-native-maps";
-import styled from "styled-components/native";
 
 interface Location {
   latitude: number;
