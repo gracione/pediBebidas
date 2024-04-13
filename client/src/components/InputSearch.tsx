@@ -1,28 +1,28 @@
-import React from "react";
-import { TextInput, TouchableOpacity, TouchableOpacityProps } from "react-native";
-import { styled } from "styled-components/native";
-import { Octicons } from '@expo/vector-icons';
+import React from 'react';
+import {TextInput, TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {styled} from 'styled-components/native';
+import {Octicons} from '@expo/vector-icons';
 
 interface InputSearchProps extends TouchableOpacityProps {
   searchQuery: string;
   handleSearch: (text: string) => void;
 }
 
-const InputSearch: React.FC<InputSearchProps> = ({ searchQuery, handleSearch, ...props }) => {
+const InputSearch: React.FC<InputSearchProps> = ({
+  searchQuery,
+  handleSearch,
+  ...props
+}) => {
   return (
     <ButtonSearchContainer {...props}>
       <TextInput
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         placeholder="Pesquisar"
         value={searchQuery}
         onChangeText={handleSearch}
-        testID="input" // Changed 'id' to 'testID'
+        testID="input"
       />
-      <Octicons
-        name="search"
-        size={24}
-        color="black"
-      />
+      <Octicons name="search" size={24} color="black" />
     </ButtonSearchContainer>
   );
 };

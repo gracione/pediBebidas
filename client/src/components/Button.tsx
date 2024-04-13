@@ -1,6 +1,6 @@
-import React from 'react';
-import { TouchableOpacity, Text, TouchableOpacityProps } from 'react-native';
-import { styled } from 'styled-components/native';
+import React from "react";
+import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
+import { styled } from "styled-components/native";
 
 interface StyledButtonProps extends TouchableOpacityProps {
   title: string;
