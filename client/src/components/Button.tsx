@@ -6,7 +6,7 @@ interface StyledButtonProps extends TouchableOpacityProps {
   title: string;
 }
 
-const StyledButton: React.FC<StyledButtonProps> = ({ title, ...props }) => {
+const Button: React.FC<StyledButtonProps> = ({ title, ...props }) => {
   return (
     <ButtonContainer {...props}>
       <ButtonText>{title}</ButtonText>
@@ -30,4 +30,4 @@ const ButtonText = styled.Text`
   color: white;
 `;
 
-export default StyledButton;
+export default Button;
