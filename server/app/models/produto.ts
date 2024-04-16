@@ -1,7 +1,7 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
-import ModelInterface from '#contracts/ModelInterface';
+import ModelInterface from '#contracts/ModelInterface'
 
-export default class Produto extends BaseModel  implements ModelInterface{
+export default class Produto extends BaseModel implements ModelInterface {
   public static table = 'produto'
 
   @column({ isPrimary: true })
@@ -20,7 +20,8 @@ export default class Produto extends BaseModel  implements ModelInterface{
   declare id_imagem: number
 
   public prepare(data: any[]): any[] {
-    return data; 
+    data['valor'] = data['valor'].replace(/\,/g, '.')
+    return data
   }
 
   public static async getProdutosByIdEstabelecimento(idEstabelecimento: number) {
