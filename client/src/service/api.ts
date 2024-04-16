@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ProdutosInterface } from './types';
 
 const api = axios.create({
-  baseURL: 'http://10.0.2.2:3333/',
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
 });
 
 export const fetchProdutosByEstabelecimento = async (idEstabelecimento: number): Promise<ProdutosInterface[]> => {
