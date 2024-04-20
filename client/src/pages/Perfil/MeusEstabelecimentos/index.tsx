@@ -1,18 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {Button, Alert, Text} from 'react-native';
-import {StyleSheet, View} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-import {EstabelecimentoComEndereco} from './types';
-import {fetchEstabelecimentos, saveEstabelecimento} from './api';
-import {Container, FormContainer, StyledTextInput, Card} from './style';
-import MapView, {Marker, Region} from 'react-native-maps';
+import React, { useState, useEffect } from 'react';
+import { Button, Alert, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { EstabelecimentoComEndereco } from './types';
+import { fetchEstabelecimentos, saveEstabelecimento } from './api';
+import { Container, FormContainer, StyledTextInput, Card } from './style';
+import MapView, { Marker, Region } from 'react-native-maps';
+import { EditarEstabelecimento } from './EditarEstabelecimento';
 
 interface Location {
     latitude: number;
     longitude: number;
 }
 
-const MeusEstabelecimentos: React.FC = () => {
+const MeusEstabelecimentos: React.FC = ({ navigation }) => {
     const [estabelecimento, setEstabelecimento] =
         useState<EstabelecimentoComEndereco>({
             nome: '',
@@ -47,7 +48,7 @@ const MeusEstabelecimentos: React.FC = () => {
         field: keyof EstabelecimentoComEndereco,
         value: string
     ) => {
-        setEstabelecimento({...estabelecimento, [field]: value});
+        setEstabelecimento({ ...estabelecimento, [field]: value });
     };
 
     const handleSave = async () => {
@@ -90,14 +91,18 @@ const MeusEstabelecimentos: React.FC = () => {
     };
 
     const handleMapPress = (event: {
-        nativeEvent: {coordinate: {latitude: number; longitude: number}};
+        nativeEvent: { coordinate: { latitude: number; longitude: number } };
     }) => {
-        const {latitude, longitude} = event.nativeEvent.coordinate;
+        const { latitude, longitude } = event.nativeEvent.coordinate;
         setEstabelecimento((prevEstabelecimento) => ({
             ...prevEstabelecimento,
             latitude: latitude.toString(),
             longitude: longitude.toString(),
         }));
+    };
+
+    const handleEstabelecimentoPress = (id: string) => {
+        navigation.navigate('EditarEstabelecimento', { id });
     };
 
     return (
@@ -150,9 +155,15 @@ const MeusEstabelecimentos: React.FC = () => {
                     />
 
                     {response.map((estabelecimentoF, index) => (
-                        <Card key={index}>
-                            <Text>{estabelecimentoF.nome}</Text>
-                        </Card>
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() =>
+                                handleEstabelecimentoPress(estabelecimentoF.id)
+                            }>
+                            <Card>
+                                <Text>{estabelecimentoF.nome}</Text>
+                            </Card>
+                        </TouchableOpacity>
                     ))}
                 </>
             )}

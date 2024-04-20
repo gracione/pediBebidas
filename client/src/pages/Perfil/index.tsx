@@ -4,6 +4,7 @@ import {ListItem, Avatar} from 'react-native-elements';
 import Endereco from '../../pages/Perfil/Endereco';
 import MeusEstabelecimentos from '../../pages//Perfil/MeusEstabelecimentos';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { EditarEstabelecimento } from './MeusEstabelecimentos/EditarEstabelecimento';
 
 interface NavbarProps {
   sairDoPerfil: () => void;
@@ -75,6 +76,7 @@ const Perfil: React.FC<NavbarProps> = ({sairDoPerfil}) => {
         </Stack.Screen>
         <Stack.Screen name="Meus Estabelecimentos" component={MeusEstabelecimentos} />
         <Stack.Screen name="Endereco" component={Endereco} />
+        <Stack.Screen name="EditarEstabelecimento" component={EditarEstabelecimento} />
       </Stack.Navigator>
     </View>
   );
