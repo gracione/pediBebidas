@@ -43,6 +43,19 @@ export default class EstabelecimentoController {
   }
 
   async show({ auth, params, response }: HttpContext) {
+    const idEstabelecimento = params['idEstabelecimento'];
+  
+    const estabelecimento = await Estabelecimento.query()
+    .where('id', idEstabelecimento);
+  
+    if (!estabelecimento) {
+      return response.notFound({ message: `Estabelecimento not found for user with ID ${idEstabelecimento}` })
+    }
+  
+    return response.ok(estabelecimento)
+  }
+
+  async findEstablishmentByUser({ auth, params, response }: HttpContext) {
     const idUsuario = auth.user?.id
   
     const estabelecimento = await Estabelecimento.query()
