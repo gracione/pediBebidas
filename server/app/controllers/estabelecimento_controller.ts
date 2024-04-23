@@ -52,7 +52,7 @@ export default class EstabelecimentoController {
       return response.notFound({ message: `Estabelecimento not found for user with ID ${idEstabelecimento}` })
     }
   
-    return response.ok(estabelecimento)
+    return response.ok(estabelecimento[0])
   }
 
   async findEstablishmentByUser({ auth, params, response }: HttpContext) {
