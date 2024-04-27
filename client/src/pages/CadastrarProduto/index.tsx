@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { Input } from 'react-native-elements';
-import api from '../../service/api';
+import api from '@service/api';
 import Button from '../../components/Button';
 
 interface Estabelecimento {

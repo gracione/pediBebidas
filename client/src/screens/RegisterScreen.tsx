@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import styled from 'styled-components/native';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import api from '../service/api';
+import api from '@service/api';
 
 const Container = styled.View`
   flex: 1;

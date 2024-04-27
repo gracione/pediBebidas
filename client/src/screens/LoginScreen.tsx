@@ -3,7 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import LogoImage from '../assets/logo.png';
-import api, { saveToken } from '../service/api';
+import api, { saveToken } from '@service/api';
 import { LogoStyle, ImagemStyle, Container, ErrorText } from './styles';
 import { AuthContext } from '../contexts/auth';
 
