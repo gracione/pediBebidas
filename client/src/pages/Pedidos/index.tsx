@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import api from "../../service/api";
-import PedidoCard from "./../../components/PedidoCard";
+import PedidoCard from "@components/PedidoCard";
 import { Container, LoadingContainer, ErrorContainer, ErrorText } from "./styles";
 
 interface Pedido {

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Alert, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styled from 'styled-components/native';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import Input from '@components/Input';
+import Button from '@components/Button';
 import api from '@service/api';
 
 const Container = styled.View`

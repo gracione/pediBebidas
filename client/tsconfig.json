@@ -4,7 +4,10 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "@service/*": ["./src/service/*"]
+      "@service/*": ["./src/service/*"],
+      "@components/*": ["./src/components/*"],
+      "@navigation/*": ["./src/navigation/*"],
+      "@pages/*": ["./src/pages/*"]
     }
   },
   "exclude": ["node_modules", "build"]

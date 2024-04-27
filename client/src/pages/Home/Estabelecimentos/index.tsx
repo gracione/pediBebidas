@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import InputSearch from '../../../components/InputSearch';
+import InputSearch from '@components/InputSearch';
 import api from '@service/api';
 import { Container, CardEstabelecimento, CardContent, CardText, CardImage, CardAberto, CardFechado, CardDistancia } from './style';
 import * as Location from 'expo-location';
