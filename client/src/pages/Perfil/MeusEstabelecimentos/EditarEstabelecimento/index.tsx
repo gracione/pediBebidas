@@ -20,6 +20,9 @@ export const EditarEstabelecimento: React.FC<EditarEstabelecimentoProps> = ({ ro
     const { id } = route.params;
     const [estabelecimento, setEstabelecimento] = useState<Estabelecimento | null>(null);
 
+    const handleSalvarEdicao = async () => {
+    };
+
     useEffect(() => {
         const fetchEstabelecimento = async () => {
             try {
@@ -30,15 +33,18 @@ export const EditarEstabelecimento: React.FC<EditarEstabelecimentoProps> = ({ ro
                 Alert.alert('Erro', 'Ocorreu um erro ao buscar o estabelecimento.');
             }
         };
-        console.log(estabelecimento)
+        console.log(estabelecimento);
         fetchEstabelecimento();
     }, [id]);
 
+    const [nomeEditado, setNomeEditado] = useState('');
 
     return (
         <View>
             <Text>{estabelecimento?.nome}</Text>
-            <TextInput placeholder="Nome do estabelecimento" />
+            <TextInput value={estabelecimento?.nome} onChangeText={(text) => setNomeEditado(text)} />
+
+            <Button title="Salvar" onPress={handleSalvarEdicao} />
         </View>
     );
 };
