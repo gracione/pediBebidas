@@ -17,3 +17,11 @@ export const saveEstabelecimento = async (estabelecimento: EstabelecimentoComEnd
     throw error;
   }
 };
+
+export const update = async (tabela: string, dados: any): Promise<void> => {
+  try {
+    await api.post(tabela, dados);
+  } catch (error) {
+    throw error;
+  }
+};

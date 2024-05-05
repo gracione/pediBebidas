@@ -20,8 +20,20 @@ export const EditarEstabelecimento: React.FC<EditarEstabelecimentoProps> = ({ ro
     const { id } = route.params;
     const [estabelecimento, setEstabelecimento] = useState<Estabelecimento | null>(null);
 
+    const update = async (rota: string, dados: any): Promise<void> => {
+        try {
+          await api.post(rota, dados);
+        } catch (error) {
+          throw error;
+        }
+      };
+      
     const handleSalvarEdicao = async () => {
+        update('estabelecimento/alterar',{
+            estabelecimento: estabelecimento
+        })
     };
+
 
     useEffect(() => {
         const fetchEstabelecimento = async () => {
@@ -42,7 +54,7 @@ export const EditarEstabelecimento: React.FC<EditarEstabelecimentoProps> = ({ ro
     return (
         <View>
             <Text>{estabelecimento?.nome}</Text>
-            <TextInput value={estabelecimento?.nome} onChangeText={(text) => setNomeEditado(text)} />
+            <TextInput defaultValue={estabelecimento?.nome} onChangeText={(text) => setNomeEditado(text)} />
 
             <Button title="Salvar" onPress={handleSalvarEdicao} />
         </View>

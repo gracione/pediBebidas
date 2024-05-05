@@ -73,4 +73,17 @@ export default class EstabelecimentoController {
     return response.ok(data)
   }
 
+  async update({ params, request, response }: HttpContext) {
+    const instance = await Estabelecimento.find(params.id)
+
+    if (!instance) {
+      return response.notFound({ message: `${Estabelecimento.name} not found` })
+    }
+
+    const data = request.only(Estabelecimento.$columns.map((column) => column.columnName))
+    instance.merge(data)
+    await instance.save()
+
+    return response.ok(instance)
+  }
 }

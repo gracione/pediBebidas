@@ -19,6 +19,7 @@ router.group(() => {
   router.put('/endereco', [EnderecosController, 'updateAddressUser']).use(middleware.ValidateCreate())
   router.get('/endereco', [EnderecosController, 'show'])
   router.post('/estabelecimento', [EstabelecimentoController, 'store']).use(middleware.ValidateCreate())
+  router.put('/estabelecimento', [EstabelecimentoController, 'update'])
   router.get('/estabelecimento-por-usuario', [EstabelecimentoController, 'findEstablishmentByUser'])
   router.get('/estabelecimento/:idEstabelecimento', [EstabelecimentoController, 'show'])
   router.get('/estabelecimento', [EstabelecimentoController, 'index'])
