@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { ActivityIndicator, Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import InputSearch from '@components/InputSearch';
 import api from '@service/api';
-import { Container, CardEstabelecimento, CardContent, CardText, CardImage, CardAberto, CardFechado, CardDistancia } from './style';
+import { Container, CardEstabelecimento, CardContent, CardText, CardImage, CardAberto, CardDistancia } from './style';
 import * as Location from 'expo-location';
 
 interface NavbarProps {
@@ -20,15 +20,18 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstab
     const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>([]);
     const [location, setLocation] = useState<Location.LocationObject | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true); // Estado para controle de carregamento
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await api.get('estabelecimento');
                 setEstabelecimentos(response.data);
+                setLoading(false); // Indica que os dados foram carregados com sucesso
             } catch (error) {
                 console.error(error);
                 Alert.alert('Erro ao carregar endereço. Por favor, tente novamente mais tarde.');
+                setLoading(false); // Indica que houve um erro ao carregar os dados
             }
         };
 
@@ -48,7 +51,6 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstab
             }
         };
 
-        console.log(location);
         getLocation();
         fetchData();
     }, []);
@@ -56,10 +58,21 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstab
     const handleSearch = (query: string) => {
         setSearchQuery(query);
     };
+
     function navegar(idEstabelecimento: number) {
         setIdEstabelecimento(idEstabelecimento);
         navigation.navigate('FazerPedido', { id: idEstabelecimento });
     }
+
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Loading, please wait...</Text>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
+    }
+
     return (
         <Container>
             <InputSearch placeholder="Pesquisar" value={searchQuery} onChangeText={handleSearch} />
