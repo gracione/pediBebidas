@@ -16,18 +16,19 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstab
     const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>([]);
     const [location, setLocation] = useState<Location.LocationObject | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true); // Estado para controle de carregamento
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await api.get('estabelecimento');
                 setEstabelecimentos(response.data);
-                setLoading(false); // Indica que os dados foram carregados com sucesso
+                setLoading(false);
             } catch (error) {
                 console.error(error);
                 Alert.alert('Erro ao carregar endereço. Por favor, tente novamente mais tarde.');
-                setLoading(false); // Indica que houve um erro ao carregar os dados
+                setLoading(false);
             }
         };
 
