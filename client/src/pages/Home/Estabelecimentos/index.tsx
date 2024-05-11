@@ -20,7 +20,7 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstab
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const estabelecimentoData = async () => {
             try {
                 const response = await api.get('estabelecimento');
                 setEstabelecimentos(response.data);
@@ -49,7 +49,7 @@ export const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstab
         };
 
         getLocation();
-        fetchData();
+        estabelecimentoData();
     }, []);
 
     const handleSearch = (query: string) => {
