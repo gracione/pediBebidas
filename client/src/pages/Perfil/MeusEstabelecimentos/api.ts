@@ -1,5 +1,5 @@
 import api from "../../../service/api";
-import { EstabelecimentoComEndereco } from "./types";
+import { EstabelecimentoComEndereco } from "@service/types";
 
 export const fetchEstabelecimentos = async (): Promise<EstabelecimentoComEndereco[]> => {
   try {

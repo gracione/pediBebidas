@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Button, Alert } from 'react-native';
 import { Text } from 'react-native-elements';
 import api from '@service/api';
-
-interface Estabelecimento {
-    id: number;
-    nome: string;
-}
+import { Estabelecimento } from '@service/types';
 
 interface EditarEstabelecimentoProps {
     route: {

@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import InputSearch from '@components/InputSearch';
 import api from '@service/api';
+import { Estabelecimento } from '@service/types';
 import { Container, CardEstabelecimento, CardContent, CardText, CardImage, CardAberto, CardDistancia } from './style';
 import * as Location from 'expo-location';
 
 interface NavbarProps {
     navigation: any;
     setIdEstabelecimento: any;
-}
-
-interface Estabelecimento {
-    id: number;
-    nome: string;
 }
 
 export const Estabelecimentos: React.FC<NavbarProps> = ({ navigation, setIdEstabelecimento }) => {

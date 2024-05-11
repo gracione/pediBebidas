@@ -4,11 +4,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { Input } from 'react-native-elements';
 import api from '@service/api';
 import Button from '@components/Button';
-
-interface Estabelecimento {
-    id: number;
-    nome: string;
-}
+import { Estabelecimento } from '@service/types';
 
 const CadastrarProduto: React.FC = () => {
     const [nome, setNome] = useState('');

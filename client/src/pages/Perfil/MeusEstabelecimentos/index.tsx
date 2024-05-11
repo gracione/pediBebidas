@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Alert, Text, TouchableOpacity } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { EstabelecimentoComEndereco } from './types';
+import { EstabelecimentoComEndereco } from '@service/types';
 import { fetchEstabelecimentos, saveEstabelecimento } from './api';
 import { Container, FormContainer, StyledTextInput, Card } from './style';
 import MapView, { Marker, Region } from 'react-native-maps';
