@@ -14,11 +14,11 @@ export default class UsuariosController extends BaseController {
     try {
       const { email } = request.only(['email'])
       let user = await Usuario.findBy('email', email)
-
+      
       if (user) {
         return response.status(400).send({ error: 'Email já cadastrado' })
       }
-
+      
       const usuarioData = request.only(['nome', 'telefone', 'email', 'password', 'data_nascimento'])
       usuarioData.password = await hash.make(usuarioData.password)
       const enderecoData = request.only([
@@ -32,7 +32,6 @@ export default class UsuariosController extends BaseController {
       const endereco = await Endereco.create(enderecoData)
       usuarioData.id_endereco = endereco.id
       usuarioData.id_tipo_usuario = UserTypes.CLIENTE
-
       user = await Usuario.create(usuarioData)
       const token = await Usuario.accessTokens.create(user)
 
